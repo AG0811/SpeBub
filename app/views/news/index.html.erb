@@ -14,8 +14,10 @@
       <span><%= '◇' %></span>
       <ul class="more_list">
         <li>
+          <%# ▼▼▼ ここの処理が上手くいかない(※試している最中です。) ▼▼▼ %>
           <%= link_to '削除', news_path(news_item), method: :delete, data: { confirm: '本当にこの記事を削除しますか？' } %>
           <%= link_to '削除!', news_path(news_item.id), data: { turbo_method: :delete } %>
+          <%# ▲▲▲ ここの処理が上手くいかない(※試している最中です。) ▲▲▲ %>
         </li>
       </ul>
     </div>
