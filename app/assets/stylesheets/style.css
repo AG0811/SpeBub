@@ -1,0 +1,58 @@
+.header{
+  background-color: aqua;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  padding: 10px;
+}
+.logo{
+  background-color: chartreuse;
+  height: 80px;
+  width: 80px;
+}
+.weather_forecast{
+  background-color: wheat;
+  height: 80px;
+  width: 300px;
+  border-radius: 10px;
+}
+.menu{
+  display: flex;
+  align-items: center;
+
+}
+.item{
+  background-color: blueviolet;
+  color: white;
+  padding: 5px 20px;
+  margin: 0px 10px;
+  border-radius: 10px;
+}
+.post{
+  background-color: wheat;
+  border-radius: 10px;
+}
+/*************************/
+.body{background-color:darkgray}
+.news-item{
+  background-color:blanchedalmond;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+/*************************/
+.footer{
+  background-color:aquamarine;
+  height: 100px;
+  border-radius: 10px;
+}
+
+/*************************/
+.menu .item.selected {
+  background-color: lightgray;
+}
+.hidden{
+  display:none;
+}
