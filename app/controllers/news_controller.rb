@@ -30,15 +30,12 @@ class NewsController < ApplicationController
     @news = News.find(params[:id])
     find_or_create_user # @userを設定する
     respond_to do |format|
-      format.html # HTML フォーマットに対応するレスポンスを返す
+      format.html { render partial: 'news/edit_form', locals: { news: @news } } # _edit_form.html.erb をレンダリング
       format.js   # JavaScript フォーマットに対応するレスポンスを返す
     end
   end
 
   def update
-    # news = News.find(params[:id])
-    # news.update(news_params)
-    # redirect_to news_index_path, notice: '記事が更新されました'
     if @news.update(news_params)
       redirect_to news_index_path, notice: '記事が更新されました'
     else

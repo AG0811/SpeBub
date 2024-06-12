@@ -15,8 +15,6 @@
       <ul class="more_list">
         <li>
           <%= link_to '編集', edit_news_path(news_item), remote: true, class: 'edit-link' %>
-          <%= link_to '編集', edit_news_path(news_item), class: 'edit' %>
-          <%= button_to '編集', edit_news_path(news_item), class: 'edit' %>
           <%# ▼▼▼ ここの処理が上手くいかない(※試している最中です。) ▼▼▼ %>
           <%# <%= link_to '削除!', news_path(news_item), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' } %>
           <%= button_to '削除', news_path(news_item), method: :delete, data: { confirm: "本当に削除しますか？" }  %>

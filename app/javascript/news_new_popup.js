@@ -1,24 +1,27 @@
 console.log('news_new_popup.jsを読み込みました')
-document.addEventListener("turbolinks:load", function() {
-  document.querySelectorAll('.edit-link').forEach(function(link) {
-    link.addEventListener('click', function(event) {
+document.addEventListener('DOMContentLoaded', function() {
+  const postLink = document.querySelector('.post');
+  const formPopup = document.querySelector('.form-popup');
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+  document.body.appendChild(overlay);
+
+  if (postLink && formPopup) {
+    postLink.addEventListener('click', function(event) {
       event.preventDefault();
-      const url = this.getAttribute('href');
-
-      fetch(url)
-        .then(response => response.text())
-        .then(html => {
-          document.querySelector('.form-popup').innerHTML = html;
-          document.querySelector('.overlay').style.display = 'block';
-          document.querySelector('.form-popup').style.display = 'block';
-        })
-        .catch(error => console.log(error));
+      formPopup.classList.add('active');
+      overlay.classList.add('active');
     });
-  });
 
-  // Close the popup when clicking the overlay
-  document.querySelector('.overlay').addEventListener('click', function() {
-    document.querySelector('.overlay').style.display = 'none';
-    document.querySelector('.form-popup').style.display = 'none';
-  });
+    // Popup外をクリックした際にPopupを非表示にする
+    overlay.addEventListener('click', function() {
+      formPopup.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    // Popup内のクリックイベントを無視
+    formPopup.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+  }
 });

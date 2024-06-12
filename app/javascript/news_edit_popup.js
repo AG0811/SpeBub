@@ -1,24 +1,29 @@
 console.log('news_edit_popup.jsを読み込みました')
-document.addEventListener("turbolinks:load", function() {
-  document.querySelectorAll('.edit-link').forEach(function(link) {
-    link.addEventListener('click', function(event) {
-      event.preventDefault();
-      const url = this.getAttribute('href');
+document.addEventListener('DOMContentLoaded', () => {
+  const editButtons = document.querySelectorAll('.edit-link');
+  const overlay = document.querySelector('.overlay');
+  const popup = document.querySelector('.edit-form-popup');
 
-      fetch(url)
-        .then(response => response.text())
-        .then(html => {
-          document.querySelector('.form-popup').innerHTML = html;
-          document.querySelector('.overlay').style.display = 'block';
-          document.querySelector('.form-popup').style.display = 'block';
-        })
-        .catch(error => console.log(error));
+  editButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const url = button.getAttribute('href');
+      fetch(url, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(response => response.text())
+      .then(data => {
+        popup.innerHTML = data;
+        overlay.style.display = 'block';
+        popup.style.display = 'block';
+      });
     });
   });
 
-  // Close the popup when clicking the overlay
-  document.querySelector('.overlay').addEventListener('click', function() {
-    document.querySelector('.overlay').style.display = 'none';
-    document.querySelector('.form-popup').style.display = 'none';
+  overlay.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    popup.style.display = 'none';
   });
 });
