@@ -1,4 +1,4 @@
-<%= form_with(model: @new_news, local: true) do |form| %>
+<%= form_with(model: @news, url: news_path(@news), method: :patch, local: true) do |form| %>
   <div class="field">
     <%= form.label :author_name %>
     <%= form.text_field :author_name, placeholder: @user.username, value: @user.username %>
@@ -20,6 +20,6 @@
     <%= form.collection_select :prefecture_id, @prefectures, :id, :name, { selected: @user.address_id } %>
   </div>
   <div class="actions">
-    <%= form.submit '作成する' %>
+    <%= form.submit '更新する' %>
   </div>
 <% end %>

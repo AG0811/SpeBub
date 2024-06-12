@@ -1,4 +1,4 @@
-export {};
+console.log('news_new_popup.jsを読み込みました')
 document.addEventListener('DOMContentLoaded', function() {
   const postLink = document.querySelector('.post');
   const formPopup = document.querySelector('.form-popup');

@@ -6,10 +6,8 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= javascript_importmap_tags %>
-  <%= stylesheet_link_tag "application", "news_popup", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag "application", "news_popup", "type": "module", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag "application", "news_filter", "type": "module", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "news_new_popup", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "news_new_popup","news_edit_popup", "news_filter", "type": "module", "data-turbo-track": "reload" %>
 
 </head>
 <body class="body">
@@ -38,6 +36,9 @@
   <!-- ポップアップを追加 -->
   <div class="form-popup">
     <%= render 'news/form' %>
+  </div>
+  <div class="edit-form-popup">
+    <%= render 'news/edit_form' %>
   </div>
 
   <%= yield %>
