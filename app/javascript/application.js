@@ -4,3 +4,8 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "ip_address"
 import "news_filter"
+import "news_new_popup"
+import "news_edit_popup"
+
+import { Turbo } from "@hotwired/turbo-rails"
+Turbo.session.drive = true

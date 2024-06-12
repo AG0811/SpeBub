@@ -1,8 +1,7 @@
 class NewsController < ApplicationController
-  before_action :load_active_hash, only: [:index, :new, :create, :show]
-  before_action :find_or_create_user, only: [:index, :create, :show]
-  # before_action :set_news, only: [:show, :destroy]
-  before_action :set_news, only: [ :destroy]
+  before_action :load_active_hash, only: [:index, :new, :create, :show, :edit]
+  before_action :find_or_create_user, only: [:index, :create, :show, :edit]
+  before_action :set_news, only: [ :show,:destroy, :update]
 
   def index
     @news = News.all
@@ -14,6 +13,7 @@ class NewsController < ApplicationController
   end
 
   def create
+    logger.info("createメソッドです")
     @news = News.new(news_params)
     @news.author_name = @user.username
 
@@ -26,6 +26,25 @@ class NewsController < ApplicationController
 
   # def show
   # end
+  def edit
+    @news = News.find(params[:id])
+    find_or_create_user # @userを設定する
+    respond_to do |format|
+      format.html # HTML フォーマットに対応するレスポンスを返す
+      format.js   # JavaScript フォーマットに対応するレスポンスを返す
+    end
+  end
+
+  def update
+    # news = News.find(params[:id])
+    # news.update(news_params)
+    # redirect_to news_index_path, notice: '記事が更新されました'
+    if @news.update(news_params)
+      redirect_to news_index_path, notice: '記事が更新されました'
+    else
+      render :edit
+    end
+  end
 
   def destroy
     logger.debug("◆コントローラーでデバッグ: 削除処理を実行")
