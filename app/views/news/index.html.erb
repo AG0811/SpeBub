@@ -1,3 +1,16 @@
+<div class="menu">
+  <div class="item" data-filter="all">記事一覧</div>
+  <div class="item" data-filter="favorite">お気に入り記事</div>
+  <div class="item" data-filter="unread">未読記事</div>
+  <div class="item" data-filter="search">検索記事</div>
+  <div class="item" data-filter="">投稿記事一覧</div>
+  <select id="prefecture-select">
+    <% @prefectures.each do |prefecture| %>
+    <option value="<%= prefecture.id %>" <%= 'selected' if prefecture.id == @user.address_id %>><%= prefecture.name %></option>
+    <% end %>
+  </select>
+</div>
+
 <div class="contents row">
   <%# ipaddressを取得するJS読み込み %>
   <%# <h1>Your IP Address:</h1> %>
@@ -7,18 +20,15 @@
   <div>都道府県： <%= @prefectures.find(@user.address_id).name %></div>
 
   <% @news.each do |news_item| %>
-  <div class="news-item" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-address-id="<%= @user.address_id %>">
-
+  <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-address-id="<%= @user.address_id %>">
     <div class="more">
       <%# <span><%= image_tag 'arrow_top.png' %>
       <span><%= '◇' %></span>
       <ul class="more_list">
         <li>
           <%= link_to '編集', edit_news_path(news_item), remote: true, class: 'edit-link' %>
-          <%# ▼▼▼ ここの処理が上手くいかない(※試している最中です。) ▼▼▼ %>
           <%# <%= link_to '削除!', news_path(news_item), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' } %>
           <%= button_to '削除', news_path(news_item), method: :delete, data: { confirm: "本当に削除しますか？" }  %>
-          <%# ▲▲▲ ここの処理が上手くいかない(※試している最中です。) ▲▲▲ %>
         </li>
       </ul>
     </div>
