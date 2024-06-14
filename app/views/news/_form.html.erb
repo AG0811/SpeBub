@@ -3,6 +3,14 @@
     <%= form.label :author_name %>
     <%= form.text_field :author_name, placeholder: @user.username, value: @user.username %>
   </div>
+
+  <div class="field">
+    <%= form.label :images, "画像" %>
+    <%= form.file_field :images, id: 'news_images', multiple: true %>
+  </div>
+  <!-- ここにプレビューを表示する領域 -->
+  <div id="image-preview"></div>
+
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title, placeholder: 'タイトル' %>

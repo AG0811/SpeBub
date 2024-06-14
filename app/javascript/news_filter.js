@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('turbolinks:load', () => {
+// document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbolinks:load', () => {
   const menuItems = document.querySelectorAll('.menu .item');
   const selectElement = document.getElementById('prefecture-select');
   const defaultItem = document.querySelector('.menu .item[data-filter="all"]');
@@ -12,21 +14,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // メニューアイテムクリックを処理する関数
-  const handleMenuItemClick = (event) => {
-    resetBackgroundColors();
-    const clickedItem = event.target;
-    clickedItem.style.backgroundColor = '#ccc'; // 例：必要に応じて変更
+// メニューアイテムクリックを処理する関数
+const handleMenuItemClick = (event) => {
+  resetBackgroundColors();
+  const clickedItem = event.target;
+  clickedItem.style.backgroundColor = '#ccc'; // 例：必要に応じて変更
 
-    if (clickedItem.dataset.filter === 'search') {
-      selectElement.classList.remove('hidden');
-      const selectedPrefectureId = selectElement.value;
-      filterNewsItems('search', selectedPrefectureId);
-    } else {
-      selectElement.classList.add('hidden');
-      filterNewsItems(clickedItem.dataset.filter);
-    }
-  };
+  if (clickedItem.dataset.filter === 'search') {
+    selectElement.classList.remove('hidden');
+    const selectedPrefectureId = selectElement.value;
+    filterNewsItems('search', selectedPrefectureId);
+  } else {
+    selectElement.classList.add('hidden');
+    filterNewsItems(clickedItem.dataset.filter);
+  }
+
+  // ページのURLを 'http://localhost:3000/' に変更
+  setTimeout(() => {
+    window.location.href = '/';
+  }, 100); // 100ミリ秒後にページをリロード
+};
 
   // ニュースアイテムをフィルタリングする関数
   const filterNewsItems = (filter, selectedPrefectureId = null) => {
@@ -69,5 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
   selectElement.addEventListener('change', (event) => {
     const selectedPrefectureId = event.target.value;
     filterNewsItems('search', selectedPrefectureId);
+  });
+});
+
+document.addEventListener('turbolinks:load', () => {
+  const menuItems = document.querySelectorAll('.menu .item');
+
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      window.location.href = '/news'; // 'http://localhost:3000/news' にリダイレクト
+    });
   });
 });

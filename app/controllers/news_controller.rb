@@ -1,11 +1,11 @@
 class NewsController < ApplicationController
   before_action :load_active_hash, only: [:index, :new, :create, :show, :edit]
   before_action :find_or_create_user, only: [:index, :create, :show, :edit]
-  before_action :set_news, only: [ :show,:destroy, :update]
+  before_action :set_news, only: [:show, :destroy, :update]
 
   def index
-    @news = News.all
-    @new_news = News.new
+    @news = News.all # すべてのニュース記事を取得
+    @new_news = News.new # 新しいニュース記事を作成するためのインスタンス
   end
 
   def new
@@ -13,7 +13,6 @@ class NewsController < ApplicationController
   end
 
   def create
-    logger.info("createメソッドです")
     @news = News.new(news_params)
     @news.author_name = @user.username
 
@@ -24,14 +23,16 @@ class NewsController < ApplicationController
     end
   end
 
-  # def show
-  # end
+  def show
+    @new_news = News.new
+  end
+
   def edit
     @news = News.find(params[:id])
-    find_or_create_user # @userを設定する
+    find_or_create_user
     respond_to do |format|
-      format.html { render partial: 'news/edit_form', locals: { news: @news } } # _edit_form.html.erb をレンダリング
-      format.js   # JavaScript フォーマットに対応するレスポンスを返す
+      format.html { render partial: 'news/edit_form', locals: { news: @news } }
+      format.js
     end
   end
 
@@ -44,7 +45,6 @@ class NewsController < ApplicationController
   end
 
   def destroy
-    logger.debug("◆コントローラーでデバッグ: 削除処理を実行")
     @news.destroy
     redirect_to news_index_path, notice: '記事が削除されました'
   end
@@ -69,6 +69,6 @@ class NewsController < ApplicationController
   end
 
   def news_params
-    params.require(:news).permit(:title, :content, :prefecture_id, :category_id)
+    params.require(:news).permit(:title, :content, :prefecture_id, :category_id, images: [])
   end
 end

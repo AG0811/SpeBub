@@ -1,0 +1,24 @@
+<div class="actions">
+  <%= link_to '記事一覧に戻る', news_index_path %>
+</div>
+<h1><%= @news.title %></h1>
+<p>投稿者名：<%= @news.author_name %></p>
+<p>カテゴリー：<%= @categories.find(@news.category_id).name %></p>
+<p>地方：<%= @prefectures.find(@news.prefecture_id).name %></p>
+
+<% @news.images.each do |image| %>
+  <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true) %>
+<% end %>
+
+<p>内容：<%= @news.content %></p>
+<div class="actions">
+  <%= link_to '記事一覧に戻る', news_index_path %>
+</div>
+
+<%# ↓一応です　最終的にはID参照する予定 %>
+<% if @user.username == @news.author_name %>
+  <a>記事製作者です</a>
+  <%= link_to '編集', edit_news_path(@news), class: 'edit-link', style: 'display: inline' %> |
+  <%= button_to '削除', news_path(@news), method: :delete, data: { confirm: "本当に削除しますか？" }, id: 'delete-button', style: 'display: inline' %>
+<% end %>
+
