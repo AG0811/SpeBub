@@ -23,13 +23,12 @@
   <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-address-id="<%= @user.address_id %>">
     <div class="more">
       <%# <span><%= image_tag 'arrow_top.png' %>
-      <span><%= '◇' %></span>
       <ul class="more_list">
         <li>
           <%= link_to '編集', edit_news_path(news_item), remote: true, class: 'edit-link' %>
-          <%# <%= link_to '削除!', news_path(news_item), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' } %>
-          <%= button_to '削除', news_path(news_item), method: :delete, data: { confirm: "本当に削除しますか？" }  %>
-        </li>
+          <%= link_to '削除!', news_path(news_item), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' } %>
+          <%= button_to '削除', news_path(news_item), method: :delete %>
+          </li>
       </ul>
     </div>
 

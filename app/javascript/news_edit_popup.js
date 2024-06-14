@@ -1,5 +1,4 @@
-console.log('news_edit_popup.jsを読み込みました')
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', function() {
   const editButtons = document.querySelectorAll('.edit-link');
   const overlay = document.querySelector('.overlay');
   const popup = document.querySelector('.edit-form-popup');
@@ -19,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
         popup.innerHTML = data;
         overlay.style.display = 'block';
         popup.style.display = 'block';
-      });
+      })
+      .catch(error => console.error('Error fetching edit form:', error));
     });
   });
 
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     item.addEventListener('click', (event) => {
       const clickedElement = event.target;
 
-      // クリックした要素がボタンでない場合のみ詳細ページに遷移
       if (!clickedElement.classList.contains('edit-link') && !clickedElement.classList.contains('more_list') && !clickedElement.classList.contains('more')) {
         const newsId = item.dataset.newsId;
         window.location.href = '/news/' + newsId;

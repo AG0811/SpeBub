@@ -1,5 +1,6 @@
-console.log('news_new_popup.jsを読み込みました')
-document.addEventListener('DOMContentLoaded', function() {
+console.log('news_new_popup.jsを読み込みました');
+
+document.addEventListener('turbo:load', function() {
   const postLink = document.querySelector('.post');
   const formPopup = document.querySelector('.form-popup');
   const overlay = document.createElement('div');
