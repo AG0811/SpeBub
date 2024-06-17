@@ -21,36 +21,45 @@
 
   <% @news.each do |news_item| %>
   <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-address-id="<%= @user.address_id %>">
+
     <div class="more">
       <%# <span><%= image_tag 'arrow_top.png' %>
       <ul class="more_list">
         <li>
           <%= link_to '編集', edit_news_path(news_item), remote: true, class: 'edit-link' %>
-          <%= link_to '削除!', news_path(news_item), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' } %>
-          <%= button_to '削除', news_path(news_item), method: :delete %>
-          </li>
+        </li>
+        <li>
+          <%# <%= link_to '削除', news_path(news_item), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' }, class:'show-delete' %>
+          <%= button_to '削除', news_path(news_item), method: :delete, class: 'show-delete'  %>
+        </li>
       </ul>
     </div>
 
-    <%# <div class="content_post" style="background-image: url( @tweet.image );"> %>
-    <p>地方：<%= @prefectures.find(news_item.prefecture_id).name %></p>
-    <p>カテゴリー：<%= @categories.find(news_item.category_id).name %></p>
-    <p>タイトル：<%= news_item.title %></p>
-    <p>内容：<%= news_item.content %></p>
-    <span class="name">投稿者名：<%= news_item.author_name %></span>
+    <p class='index-title'>タイトル：<%= news_item.title %></p>
+    <p class="name">投稿者名：<%= news_item.author_name %></p>
+    <div class='index-tagbox'>
+      <p class='index-item'>地方：<%= @prefectures.find(news_item.prefecture_id).name %></p>
+      <p class='index-item'>カテゴリー：<%= @categories.find(news_item.category_id).name %></p>
+    </div>
 
+    <div class ='index-itembox'>
+    <p class='index-content'>内容：<%= news_item.content %></p>
+
+    <div class='index-items'>
       <!-- 画像の表示 -->
       <% news_item.images.each do |image| %>
-        <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true), style: "max-height: 100px; max-width: auto;" %>
+        <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true), class: "image-size-limit" %>
       <% end %>
 
       <!-- 動画の表示 -->
       <% news_item.videos.each do |video| %>
-        <video width="320" height="240" controls>
-          <source src="<%= url_for(video) %>" type="video/mp4">
+      <video class='video-size-limit' controls>
+        <source src="<%= url_for(video) %>" type="video/mp4">
           Your browser does not support the video tag.
-        </video>
+      </video>
       <% end %>
+      </div>
+    </div>
   </div>
 <% end %>
 

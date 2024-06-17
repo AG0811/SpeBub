@@ -1,21 +1,46 @@
+/* app\views\layouts\application.html.erb */
 .header{
-  background-color: aqua;
+  background-color:blueviolet;
   height: 100px;
   display: flex;
-  align-items: center;
+  align-items:center;
+  justify-content: space-between;
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px 20px;
+}
+.logo-title{
+  display: flex;
+  align-items:center;
+  text-decoration: none; /* 下線を消す */
 }
 .logo{
-  background-color: chartreuse;
-  height: 80px;
-  width: 80px;
+  background-color: white;
+  height: 95px;
+  width: 95px;
+  background-image: url('logo.png');
+  background-size: 120px;
+  background-position: center;
+  border-radius: 100px;
+}
+.title{
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  padding: 0 30px 0 30px;
+  color:white;
 }
 .weather_forecast{
-  background-color: wheat;
+  background-color: white;
   height: 80px;
   width: 300px;
   border-radius: 10px;
+}
+.post{
+  background-color: white;
+  border-radius: 50px;
+  padding: 10px;
+  text-decoration: none; /* 下線を消す */
+  color: inherit; /* デフォルトのリンクの色を維持する */
+  font-weight: bold;
 }
 .menu{
   display: flex;
@@ -27,26 +52,24 @@
   color: white;
   padding: 5px 20px;
   margin: 0px 10px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
+  border-radius: 0px 0px 10px 10px;
 }
-.post{
-  background-color: wheat;
-  border-radius: 10px;
+.body{
+  /* background-color:darkgray; */
+  background-image: url('city.png');
+  background-size: cover;
+  background-position: center;
 }
-/*************************/
-.body{background-color:darkgray}
-.news-item{
-  background-color:blanchedalmond;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 10px;
-}
-
-/*************************/
 .footer{
-  background-color:aquamarine;
+  background-color:blueviolet;
+  color: white;
   height: 100px;
   border-radius: 10px;
+  display: flex;
+  justify-content: center; /* 横方向の中央揃え */
+  align-items: center; /* 縦方向の中央揃え */
+  bottom: 0;
 }
 
 /*************************/
@@ -55,4 +78,150 @@
 }
 .hidden{
   display:none;
+}
+/*************************/
+/* app\views\news\show.html.erb */
+.wrapper{
+  display: flex;
+  justify-content: center;
+}
+.show{
+  background-color: white;
+  width: 80%;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+}
+.actions{
+  text-align: center;
+}
+.show-title{
+  text-align: center;
+  padding-top: 10px;
+}
+.show-author_name{
+  text-align: center;
+  padding-top: 10px;
+}
+.show-box{
+  display: flex;
+}
+.show-item{
+  background-color: blueviolet;
+  color: white;
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+}
+.show-items{
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+.show-items .image-size-limit {
+  max-width: 500px;
+  max-height: 240px;
+}
+.show-items .video-size-limit {
+  max-width: 500px;
+  max-height: 240px;
+}
+.show-content{
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 10px outset #31A9EE;
+  line-height: 1.8; /* 行間を広げて読みやすく */
+  font-size: 1.1rem; /* フォントサイズを少し大きく */
+}
+.show-menu{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.edit-link{
+  background-color: blueviolet;
+  color: white;
+  border-radius: 50px;
+  padding: 5px 20px;
+  text-decoration: none; /* 下線を消す */
+  font-weight: bold;
+}
+.show-delete{
+  background-color: blueviolet;
+  color: white;
+  border-radius: 50px;
+  padding: 5px 20px;
+  text-decoration: none; /* 下線を消す */
+  font-weight: bold;
+  margin-left: 10px;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+}
+
+/*************************/
+/* app\views\news\index.html.erb */
+.more_list{
+  display: flex;
+  align-items:center;
+  list-style-type: none;
+}
+
+.news-item{
+  background-color:white;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 影の設定 */
+}
+.index-tagbox{
+  display: flex;
+}
+.index-item{
+  background-color: blueviolet;
+  color: white;
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+}
+.index-title{
+  font-size: 24px;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.name{
+  text-align: center;
+  padding-right: 10px;
+}
+.index-itembox{
+  display: flex;
+  align-items: center;
+}
+.index-content{
+  font-size: 16px;
+  padding: 10px;
+  min-width: 60%;
+}
+.index-items{
+  display: flex;
+  justify-content: space-around;
+  min-width: 40%;
+  padding-left: 10px;
+}
+.index-items .image-size-limit {
+  max-width: 300px;
+  max-height: 150px;
+  padding: 10px;
+}
+.index-items .video-size-limit {
+  max-width: 300px;
+  max-height: 150px;
+  padding: 10px;
 }

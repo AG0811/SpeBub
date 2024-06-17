@@ -16,7 +16,7 @@ document.addEventListener('turbo:load', () => {
   const handleMenuItemClick = (event) => {
     resetBackgroundColors();
     const clickedItem = event.target;
-    clickedItem.style.backgroundColor = '#ccc'; // 例：必要に応じて変更
+    clickedItem.style.backgroundColor = '#ff9800'; // 例：必要に応じて変更
 
     if (clickedItem.dataset.filter === 'search') {
       selectElement.classList.remove('hidden');
@@ -63,7 +63,7 @@ document.addEventListener('turbo:load', () => {
 
   // デフォルトの選択されたアイテムを設定する
   if (defaultItem) {
-    defaultItem.style.backgroundColor = '#ccc'; // 例：必要に応じて変更
+    defaultItem.style.backgroundColor = '#ff9800'; // 例：必要に応じて変更
     filterNewsItems(defaultItem.dataset.filter); // 初期フィルタリング
   }
 
