@@ -10,6 +10,13 @@
   <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true) %>
 <% end %>
 
+<% @news.videos.each do |video| %>
+  <video width="320" height="240" controls>
+    <source src="<%= url_for(video) %>" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+<% end %>
+
 <p>内容：<%= @news.content %></p>
 <div class="actions">
   <%= link_to '記事一覧に戻る', news_index_path %>

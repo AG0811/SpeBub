@@ -15,7 +15,7 @@ class NewsController < ApplicationController
   def create
     @news = News.new(news_params)
     @news.author_name = @user.username
-
+  
     if @news.save
       redirect_to news_index_path, notice: '記事が作成されました'
     else
@@ -69,6 +69,6 @@ class NewsController < ApplicationController
   end
 
   def news_params
-    params.require(:news).permit(:title, :content, :prefecture_id, :category_id, images: [])
-  end
+    params.require(:news).permit(:title, :content, :prefecture_id, :category_id, images: [], videos: [])
+  end  
 end
