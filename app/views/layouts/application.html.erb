@@ -6,17 +6,23 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag "application", "news_new_popup", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application" %>
   <%= javascript_importmap_tags %>
-</head>
-<body class="body">
-  <header class="header">
-    <div class="logo">ロゴ</div>
-    <div>タイトル</div>
-    <div class="weather_forecast">天気予報表示</div>
-    <a class="post" href="<%= new_news_path %>">投稿する</a>
-  </header>
 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<header class="header">
+  <a class="logo-title" href= "<%=root_path%>">
+    <div class="logo"></div>
+    <div class="title">SpeBub</div>
+  </a>
+  <div class="weather_forecast">天気予報表示</div>
+  <a class="post" href="<%= new_news_path %>">投稿する</a>
+</header>
+
+<body class="body">
   <!-- オーバーレイを追加 -->
   <div class="overlay"></div>
   <!-- ポップアップを追加 -->
@@ -28,9 +34,9 @@
   </div>
 
   <%= yield %>
-
-  <footer class="footer">
-    <p>Copyright SpeBub 2024.</p>
-  </footer>
 </body>
+
+<footer class="footer">
+  <p>Copyright SpeBub 2024.</p>
+</footer>
 </html>

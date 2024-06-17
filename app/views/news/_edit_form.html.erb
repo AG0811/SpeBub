@@ -10,6 +10,10 @@
   </div>
   <!-- ここにプレビューを表示する領域 -->
   <div id="image-preview"></div>
+  <div class="field">
+    <%= form.label :videos, "動画" %>
+    <%= form.file_field :videos, id: 'news_videos', multiple: true %>
+  </div>
 
   <div class="field">
     <%= form.label :title %>

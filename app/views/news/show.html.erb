@@ -1,31 +1,42 @@
+<div class='wrapper'>
+<div class='show'>
 <div class="actions">
   <%= link_to '記事一覧に戻る', news_index_path %>
 </div>
-<h1><%= @news.title %></h1>
-<p>投稿者名：<%= @news.author_name %></p>
-<p>カテゴリー：<%= @categories.find(@news.category_id).name %></p>
-<p>地方：<%= @prefectures.find(@news.prefecture_id).name %></p>
-
+<h1 class ='show-title'><%= @news.title %></h1>
+<p class ='show-author_name'>投稿者名：<%= @news.author_name %></p>
+<div class = 'show-box'>
+  <p class ='show-item'>カテゴリー：<%= @categories.find(@news.category_id).name %></p>
+  <p class ='show-item'>地方：<%= @prefectures.find(@news.prefecture_id).name %></p>
+</div>
+<div class = 'show-items'>
 <% @news.images.each do |image| %>
-  <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true) %>
+  <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true), class: "image-size-limit" %>
 <% end %>
 
 <% @news.videos.each do |video| %>
-  <video width="320" height="240" controls>
+  <video class="video-size-limit" controls>
     <source src="<%= url_for(video) %>" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 <% end %>
+</div>
 
-<p>内容：<%= @news.content %></p>
+<p class='show-content'>内容：<%= @news.content %></p>
 <div class="actions">
   <%= link_to '記事一覧に戻る', news_index_path %>
 </div>
 
-<%# ↓一応です　最終的にはID参照する予定 %>
+<%# ↓一応です 最終的にはID参照する予定 %>
+<div class='show-menu' >
 <% if @user.username == @news.author_name %>
-  <a>記事製作者です</a>
-  <%= link_to '編集', edit_news_path(@news), class: 'edit-link', style: 'display: inline' %> |
-  <%= button_to '削除', news_path(@news), method: :delete, data: { confirm: "本当に削除しますか？" }, id: 'delete-button', style: 'display: inline' %>
+  <%# <a>記事製作者です</a> %>
+  <div class='show-edit' >
+  <%= link_to '編集', edit_news_path(@news), class: 'edit-link', style: 'display: inline' %>
+  </div>
+  <%= link_to '削除', news_path(@news), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' }, class: 'show-delete' %>
+  <%# <%= button_to '削除', news_path(@news), method: :delete, data: { confirm: "本当に削除しますか？" }, id: 'delete-button', class: 'show-delete', style: 'display: inline' %>
 <% end %>
-
+</div>
+</div>
+</div>
