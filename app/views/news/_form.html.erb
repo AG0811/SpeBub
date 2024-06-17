@@ -1,32 +1,39 @@
 <%= form_with(model: @new_news, local: true) do |form| %>
   <div class="field">
     <%= form.label :author_name %>
-    <%= form.text_field :author_name, placeholder: @user.username, value: @user.username %>
+    <%= form.text_field :author_name, placeholder: @user.username, value: @user.username, disabled: true %>
   </div>
 
   <div class="field">
     <%= form.label :images, "画像" %>
     <%= form.file_field :images, id: 'news_images', multiple: true %>
   </div>
-  <!-- ここにプレビューを表示する領域 -->
-  <div id="image-preview"></div>
+
+  <div class="field">
+    <%= form.label :videos, "動画" %>
+    <%= form.file_field :videos, id: 'news_videos', multiple: true %>
+  </div>
 
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title, placeholder: 'タイトル' %>
   </div>
+
   <div class="field">
     <%= form.label :content %>
     <%= form.text_area :content, placeholder: '記事内容' %>
   </div>
+
   <div class="field">
     <%= form.label :category_id %>
     <%= form.collection_select :category_id, @categories, :id, :name %>
   </div>
+
   <div class="field">
     <%= form.label :prefecture_id %>
     <%= form.collection_select :prefecture_id, @prefectures, :id, :name, { selected: @user.address_id } %>
   </div>
+
   <div class="actions">
     <%= form.submit '作成する' %>
   </div>

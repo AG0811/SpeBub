@@ -38,6 +38,19 @@
     <p>タイトル：<%= news_item.title %></p>
     <p>内容：<%= news_item.content %></p>
     <span class="name">投稿者名：<%= news_item.author_name %></span>
+
+      <!-- 画像の表示 -->
+      <% news_item.images.each do |image| %>
+        <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true), style: "max-height: 100px; max-width: auto;" %>
+      <% end %>
+
+      <!-- 動画の表示 -->
+      <% news_item.videos.each do |video| %>
+        <video width="320" height="240" controls>
+          <source src="<%= url_for(video) %>" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      <% end %>
   </div>
 <% end %>
 

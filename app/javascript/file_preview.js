@@ -1,5 +1,5 @@
 console.log('image_preview.jsを読み込みました')
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('turbo:load', () => {
   // 画像ファイルが選択された時の処理
   document.querySelector('#news_images').addEventListener('change', function() {
     const preview = document.querySelector('#image-preview');
