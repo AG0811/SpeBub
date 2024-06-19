@@ -32,6 +32,8 @@
   <div class="edit-form-popup">
     <%= render 'news/edit_form' %>
   </div>
+  <!-- ページのどこかにユーザーIDを埋め込む -->
+  <div id="user-data" data-user-id="<%= @user.id %>"></div>
 
   <%= yield %>
 </body>

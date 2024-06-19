@@ -4,4 +4,15 @@ class News < ApplicationRecord
   has_many_attached :videos, dependent: :destroy
   has_many :favorite_news, dependent: :destroy
   has_many :users, through: :favorite_news, dependent: :destroy
+
+  belongs_to :user
+  # 他のバリデーションやロジックを追加する場合もあります
+
+  # 作成者かどうかを判定するメソッドを定義
+  # def created_by?(current_user)
+  #   user == current_user
+  # end
+  # def created_by?(user)
+  #   self.user == user
+  # end
 end

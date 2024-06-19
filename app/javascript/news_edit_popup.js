@@ -1,3 +1,5 @@
+console.log('news_edit_popup.jsを読み込みました');
+
 document.addEventListener('turbo:load', function() {
   const editButtons = document.querySelectorAll('.edit-link');
   const overlay = document.querySelector('.overlay');

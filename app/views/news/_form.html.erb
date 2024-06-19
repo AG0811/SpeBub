@@ -1,7 +1,9 @@
 <%= form_with(model: @new_news, local: true) do |form| %>
+  <%= form.hidden_field :user_id, value: @user.id %>
+
   <div class="field">
-    <%= form.label :author_name %>
-    <%= form.text_field :author_name, placeholder: @user.username, value: @user.username, disabled: true %>
+    <%= form.label :author_name, "投稿者名" %>
+    <%= form.text_field :author_name, value: @user.username, placeholder: @user.username %>
   </div>
 
   <div class="field">
@@ -31,10 +33,11 @@
 
   <div class="field">
     <%= form.label :prefecture_id %>
-    <%= form.collection_select :prefecture_id, @prefectures, :id, :name, { selected: @user.address_id } %>
+    <%= form.collection_select :prefecture_id, @prefectures, :id, :name, { selected: @user.address_id }, prompt: "選択してください" %>
   </div>
 
-  <div class="actions">
+  <div class="create_actions">
     <%= form.submit '作成する' %>
+  </div>
   </div>
 <% end %>

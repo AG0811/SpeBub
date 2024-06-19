@@ -64,12 +64,11 @@
 .footer{
   background-color:blueviolet;
   color: white;
-  height: 100px;
+  height: 60px;
   border-radius: 10px;
   display: flex;
   justify-content: center; /* 横方向の中央揃え */
   align-items: center; /* 縦方向の中央揃え */
-  bottom: 0;
 }
 
 /*************************/
@@ -131,7 +130,8 @@
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
-  border: 10px outset #31A9EE;
+  /* border: 10px outset #31A9EE; */
+  border: 10px outset blueviolet;
   line-height: 1.8; /* 行間を広げて読みやすく */
   font-size: 1.1rem; /* フォントサイズを少し大きく */
 }
@@ -166,11 +166,18 @@
 /*************************/
 /* app\views\news\index.html.erb */
 .more_list{
+  background-color: white;
   display: flex;
   align-items:center;
   list-style-type: none;
 }
-
+.news-date-separator{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items:center;
+  list-style-type: none;
+}
 .news-item{
   background-color:white;
   padding: 10px 20px;
@@ -200,6 +207,10 @@
   text-align: center;
   padding-right: 10px;
 }
+.date{
+  text-align: center;
+  padding-right: 10px;
+}
 .index-itembox{
   display: flex;
   align-items: center;
@@ -225,3 +236,4 @@
   max-height: 150px;
   padding: 10px;
 }
+

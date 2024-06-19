@@ -22,21 +22,21 @@
 <% end %>
 </div>
 
-<p class='show-content'>内容：<%= @news.content %></p>
+<div class='show-content'>
+  内容：<%= simple_format(@news.content).html_safe %>
+</div>
 <div class="actions">
   <%= link_to '記事一覧に戻る', news_index_path %>
 </div>
 
 <%# ↓一応です 最終的にはID参照する予定 %>
 <div class='show-menu' >
-<% if @user.username == @news.author_name %>
-  <%# <a>記事製作者です</a> %>
-  <div class='show-edit' >
-  <%= link_to '編集', edit_news_path(@news), class: 'edit-link', style: 'display: inline' %>
-  </div>
-  <%= link_to '削除', news_path(@news), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' }, class: 'show-delete' %>
-  <%# <%= button_to '削除', news_path(@news), method: :delete, data: { confirm: "本当に削除しますか？" }, id: 'delete-button', class: 'show-delete', style: 'display: inline' %>
-<% end %>
+  <% if @news.user_id == @user.id %>
+    <div class='show-edit' >
+      <%= link_to '編集', edit_news_path(@news), class: 'edit-link', style: 'display: inline' %>
+    </div>
+    <%= link_to '削除', news_path(@news), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' }, class: 'show-delete' %>
+  <% end %>
 </div>
 </div>
 </div>

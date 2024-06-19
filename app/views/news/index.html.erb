@@ -3,66 +3,104 @@
   <div class="item" data-filter="favorite">お気に入り記事</div>
   <div class="item" data-filter="unread">未読記事</div>
   <div class="item" data-filter="search">検索記事</div>
-  <div class="item" data-filter="">投稿記事一覧</div>
+  <div class="item" data-filter="mine">投稿記事一覧</div>
+
   <select id="prefecture-select">
     <% @prefectures.each do |prefecture| %>
-    <option value="<%= prefecture.id %>" <%= 'selected' if prefecture.id == @user.address_id %>><%= prefecture.name %></option>
+      <option value="<%= prefecture.id %>" <%= 'selected' if @user && prefecture.id == @user.address_id %>><%= prefecture.name %></option>
     <% end %>
   </select>
 </div>
 
 <div class="contents row">
+  <!-- ユーザー情報の表示 -->
   <%# ipaddressを取得するJS読み込み %>
   <%# <h1>Your IP Address:</h1> %>
   <%# <div id="ip-address">※JSにて表示</div> %>
   <div>user名： <%= @user.username %></div>
+  <div>userID： <%= @user.id %></div>
   <div>IP： <%= @user.ip_address %></div>
-  <div>都道府県： <%= @prefectures.find(@user.address_id).name %></div>
 
+  <!-- 都道府県の表示 -->
+  <% if @user.address_id %>
+    <% prefecture = @prefectures.find_by_id(@user.address_id) %>
+    <% if prefecture %>
+      <div>都道府県： <%= prefecture.name %></div>
+    <% else %>
+      <div>都道府県： (都道府県が見つかりません)</div>
+    <% end %>
+  <% else %>
+    <div>都道府県： (都道府県が見つかりません)</div>
+  <% end %>
+
+  <!-- ニュース一覧の表示 -->
+  <% current_date = nil %>
   <% @news.each do |news_item| %>
-  <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-address-id="<%= @user.address_id %>">
+    <% news_date = news_item.created_at.to_date %>
 
-    <div class="more">
-      <%# <span><%= image_tag 'arrow_top.png' %>
-      <ul class="more_list">
-        <li>
-          <%= link_to '編集', edit_news_path(news_item), remote: true, class: 'edit-link' %>
-        </li>
-        <li>
-          <%# <%= link_to '削除', news_path(news_item), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' }, class:'show-delete' %>
-          <%= button_to '削除', news_path(news_item), method: :delete, class: 'show-delete'  %>
-        </li>
-      </ul>
-    </div>
-
-    <p class='index-title'>タイトル：<%= news_item.title %></p>
-    <p class="name">投稿者名：<%= news_item.author_name %></p>
-    <div class='index-tagbox'>
-      <p class='index-item'>地方：<%= @prefectures.find(news_item.prefecture_id).name %></p>
-      <p class='index-item'>カテゴリー：<%= @categories.find(news_item.category_id).name %></p>
-    </div>
-
-    <div class ='index-itembox'>
-    <p class='index-content'>内容：<%= news_item.content %></p>
-
-    <div class='index-items'>
-      <!-- 画像の表示 -->
-      <% news_item.images.each do |image| %>
-        <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true), class: "image-size-limit" %>
-      <% end %>
-
-      <!-- 動画の表示 -->
-      <% news_item.videos.each do |video| %>
-      <video class='video-size-limit' controls>
-        <source src="<%= url_for(video) %>" type="video/mp4">
-          Your browser does not support the video tag.
-      </video>
-      <% end %>
+    <!-- 日付が変わったら区切りを表示 -->
+    <% if current_date != news_date %>
+      <% current_date = news_date %>
+      <div class="news-date-separator">
+        <%= current_date.strftime('%Y年%m月%d日') %>
       </div>
+    <% end %>
+
+    <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-id="<%= news_item.user_id %>">
+
+      <!-- 自分の記事に対する操作メニュー -->
+      <% if news_item.user_id == @user.id %>
+        <div class="more">
+          <ul class="more_list">
+            <li>
+              <%= link_to '編集', edit_news_path(news_item), remote: true, class: 'edit-link' %>
+            </li>
+            <li>
+              <%= button_to '削除', news_path(news_item), method: :delete, class: 'show-delete' %>
+            </li>
+          </ul>
+        </div>
+      <% end %>
+
+      <!-- ニュースのタイトルや詳細表示 -->
+      <p class='index-title'>タイトル：<%= news_item.title %></p>
+      <p class="name">投稿者名：<%= news_item.author_name %></p>
+      <p class="date">投稿日時：<%= news_item.created_at.strftime('%Y年%m月%d日 %H:%M') %></p> <!-- ここで投稿日時を表示 -->
+
+      <div class='index-tagbox'>
+        <p class='index-item'>地方：<%= @prefectures.find(news_item.prefecture_id).name %></p>
+        <p class='index-item'>カテゴリー：<%= @categories.find(news_item.category_id).name %></p>
+      </div>
+
+      <div class ='index-itembox'>
+        <p class='index-content'>
+          <% truncated_content = truncate(news_item.content, length: 200, omission: '…') %>内容：<%= truncated_content.html_safe %>
+        </p>
+
+        <!-- 画像の表示 -->
+        <div class='index-items'>
+          <% news_item.images.each do |image| %>
+            <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true), class: "image-size-limit" %>
+          <% end %>
+        </div>
+
+        <!-- 動画の表示 -->
+        <div class='index-items'>
+          <% news_item.videos.each do |video| %>
+            <video class='video-size-limit' controls>
+              <source src="<%= url_for(video) %>" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          <% end %>
+        </div>
+      </div>
+
     </div>
+  <% end %>
+
+
+  <!-- ニュース投稿フォームの表示 -->
+  <div class= 'index_form'>
+  <%= render 'form', news: @new_news%>
   </div>
-<% end %>
-
-
-  <%= render 'form', news: @new_news %>
 </div>
