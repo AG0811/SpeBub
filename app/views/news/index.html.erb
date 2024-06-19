@@ -25,7 +25,7 @@
   <% if @user.address_id %>
     <% prefecture = @prefectures.find_by_id(@user.address_id) %>
     <% if prefecture %>
-      <div>都道府県： <%= prefecture.name %></div>
+        <div>都道府県： <%= prefecture.name %></div>
     <% else %>
       <div>都道府県： (都道府県が見つかりません)</div>
     <% end %>
@@ -41,12 +41,12 @@
     <!-- 日付が変わったら区切りを表示 -->
     <% if current_date != news_date %>
       <% current_date = news_date %>
-      <div class="news-date-separator">
-        <%= current_date.strftime('%Y年%m月%d日') %>
-      </div>
+    <div class="news-date-separator" data-date="<%= current_date %>">
+      <%= current_date.strftime('%Y年%m月%d日') %>
+    </div>
     <% end %>
 
-    <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-id="<%= news_item.user_id %>">
+    <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-id="<%= news_item.user_id %>" data-date="<%= news_date %>">
 
       <!-- 自分の記事に対する操作メニュー -->
       <% if news_item.user_id == @user.id %>
