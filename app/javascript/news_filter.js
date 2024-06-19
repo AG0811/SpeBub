@@ -48,17 +48,11 @@ document.addEventListener('turbo:load', () => {
       const userItemId = item.dataset.userId; // ニュースアイテムのユーザーIDを取得
       const prefectureId = item.dataset.prefectureId;
       const categoryId = item.dataset.categoryId;
-<<<<<<< Updated upstream
       const newsDate = item.dataset.date;
 
       let shouldDisplay = false;
       if (filter === 'all') {
         shouldDisplay = prefectureId === userAddressId;
-=======
-  
-      if (filter === 'all') {
-        item.style.display = prefectureId === userAddressId ? 'block' : 'none';// すべてのニュースアイテムを表示する
->>>>>>> Stashed changes
       } else if (filter === 'favorite') {
         // お気に入りのフィルタリングロジックを実装する（必要に応じて）
       } else if (filter === 'unread') {
