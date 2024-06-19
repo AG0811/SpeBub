@@ -11,6 +11,7 @@ document.addEventListener('turbo:load', () => {
   const selectElement = document.getElementById('prefecture-select');
   const defaultItem = document.querySelector('.menu .item[data-filter="all"]');
   const newsItems = document.querySelectorAll('.news-item');
+  const dateSeparators = document.querySelectorAll('.news-date-separator');
   let userAddressId = selectElement.value; // 初期の都道府県の値を取得
 
   // すべてのメニューアイテムから背景色を削除する関数
@@ -31,6 +32,7 @@ document.addEventListener('turbo:load', () => {
       const selectedPrefectureId = selectElement.value;
       filterNewsItems('search', selectedPrefectureId);
     } else if (clickedItem.dataset.filter === 'mine') {
+      selectElement.classList.add('hidden');
       filterNewsItems('mine', userId); // userIdを渡してフィルタリング
     } else {
       selectElement.classList.add('hidden');
@@ -40,28 +42,37 @@ document.addEventListener('turbo:load', () => {
 
   // ニュースアイテムをフィルタリングする関数
   const filterNewsItems = (filter, selectedPrefectureId = null) => {
+    const displayedDates = new Set();
+
     newsItems.forEach(item => {
       const userItemId = item.dataset.userId; // ニュースアイテムのユーザーIDを取得
       const prefectureId = item.dataset.prefectureId;
       const categoryId = item.dataset.categoryId;
+      const newsDate = item.dataset.date;
 
+      let shouldDisplay = false;
       if (filter === 'all') {
-        item.style.display = prefectureId === userAddressId ? 'block' : 'none';
+        shouldDisplay = prefectureId === userAddressId;
       } else if (filter === 'favorite') {
         // お気に入りのフィルタリングロジックを実装する（必要に応じて）
-        item.style.display = 'none'; // 例：今はすべてのアイテムを非表示にする
       } else if (filter === 'unread') {
         // 未読のフィルタリングロジックを実装する（必要に応じて）
-        item.style.display = 'none'; // 例：今はすべてのアイテムを非表示にする
       } else if (filter === 'search') {
-        if (prefectureId === selectedPrefectureId) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
+        shouldDisplay = prefectureId === selectedPrefectureId;
       } else if (filter === 'mine') {
-        item.style.display = userItemId === userId ? 'block' : 'none'; // ユーザーの投稿記事のみ表示
+        shouldDisplay = userItemId === userId; // ユーザーの投稿記事のみ表示
       }
+
+      item.style.display = shouldDisplay ? 'block' : 'none';
+      if (shouldDisplay) {
+        displayedDates.add(newsDate);
+      }
+    });
+
+    // 日付の区切りを表示/非表示にする
+    dateSeparators.forEach(separator => {
+      const separatorDate = separator.dataset.date;
+      separator.style.display = displayedDates.has(separatorDate) ? 'block' : 'none';
     });
   };
 

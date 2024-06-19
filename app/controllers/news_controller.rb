@@ -40,6 +40,9 @@ class NewsController < ApplicationController
   end
 
   def update
+    # ユーザー名の更新
+    @user.update(username: params[:news][:author_name])
+    # ニュースの更新
     if @news.update(news_params)
       redirect_to news_index_path, notice: '記事が更新されました'
     else
