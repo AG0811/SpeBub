@@ -12,16 +12,15 @@
   </select>
 </div>
 
+<!-- 現在のユーザー情報を保持するためのデータ属性を持つ要素 -->
+<div id="user-data" data-user-id="<%= @user.id %>"></div>
+
 <div class="contents row">
-  <!-- ユーザー情報の表示 -->
-  <%# ipaddressを取得するJS読み込み %>
-  <%# <h1>Your IP Address:</h1> %>
-  <%# <div id="ip-address">※JSにて表示</div> %>
   <div>user名： <%= @user.username %></div>
   <div>userID： <%= @user.id %></div>
   <div>IP： <%= @user.ip_address %></div>
 
-  <!-- 都道府県の表示 -->
+  <!-- ユーザーの住所情報の表示 -->
   <% if @user.address_id %>
     <% prefecture = @prefectures.find_by_id(@user.address_id) %>
     <% if prefecture %>
@@ -33,12 +32,11 @@
     <div>都道府県： (都道府県が見つかりません)</div>
   <% end %>
 
-  <!-- ニュース一覧の表示 -->
   <% current_date = nil %>
   <% @news.each do |news_item| %>
     <% news_date = news_item.created_at.to_date %>
 
-    <!-- 日付が変わったら区切りを表示 -->
+    <!-- 日付が変わるたびに区切りを表示 -->
     <% if current_date != news_date %>
       <% current_date = news_date %>
     <div class="news-date-separator" data-date="<%= current_date %>">
@@ -46,14 +44,18 @@
     </div>
     <% end %>
 
-    <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-id="<%= news_item.user_id %>" data-date="<%= news_date %>">
+    <!-- ニュースアイテムを表示 -->
+    <div class="news-item" 
+      data-news-id="<%= news_item.id %>" 
+      data-prefecture-id="<%= news_item.prefecture_id %>" 
+      data-user-id="<%= news_item.user_id %>" 
+      data-date="<%= news_item.created_at.to_date %>"
+      data-favorited-by-current-user="<%= news_item.favorite_by?(current_user) %>">
 
-      <!--▼ 記事のお気に入り操作※先ずはチェックボックス式にしたい ▼-->
+      <!-- お気に入りボタンを表示 -->
       <%= render partial: "favorites/favorite", locals: { news: news_item } %>
-      <!--▲ 記事のお気に入り操作 ▲-->
 
-
-      <!-- 自分の記事に対する操作メニュー -->
+      <!-- 自分の投稿に対する操作メニュー -->
       <% if news_item.user_id == @user.id %>
         <div class="more">
           <ul class="more_list">
@@ -67,19 +69,22 @@
         </div>
       <% end %>
 
-      <!-- ニュースのタイトルや詳細表示 -->
+      <!-- ニュースのタイトルと詳細を表示 -->
       <p class='index-title'>タイトル：<%= news_item.title %></p>
       <p class="name">投稿者名：<%= news_item.author_name %></p>
-      <p class="date">投稿日時：<%= news_item.created_at.strftime('%Y年%m月%d日 %H:%M') %></p> <!-- ここで投稿日時を表示 -->
+      <p class="date">投稿日時：<%= news_item.created_at.strftime('%Y年%m月%d日 %H:%M') %></p>
 
+      <!-- タグの表示 -->
       <div class='index-tagbox'>
         <p class='index-item'>地方：<%= @prefectures.find(news_item.prefecture_id).name %></p>
         <p class='index-item'>カテゴリー：<%= @categories.find(news_item.category_id).name %></p>
       </div>
 
+      <!-- ニュースのコンテンツ表示 -->
       <div class ='index-itembox'>
         <p class='index-content'>
-          <% truncated_content = truncate(news_item.content, length: 200, omission: '…') %>内容：<%= truncated_content.html_safe %>
+          <% truncated_content = truncate(news_item.content, length: 200, omission: '…') %>
+          内容：<%= truncated_content.html_safe %>
         </p>
 
         <!-- 画像の表示 -->
@@ -103,9 +108,8 @@
     </div>
   <% end %>
 
-
   <!-- ニュース投稿フォームの表示 -->
   <div class= 'index_form'>
-  <%= render 'form', news: @new_news%>
+    <%= render 'form', news: @new_news %>
   </div>
 </div>
