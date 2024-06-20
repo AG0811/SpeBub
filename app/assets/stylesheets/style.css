@@ -189,6 +189,29 @@
 .index-tagbox{
   display: flex;
 }
+.news_favorites{
+  background-color: blueviolet;
+  color: white;
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+}
+.flex-container {
+  display: flex; /* Flexboxを使用して要素を横並びに配置 */
+  align-items: center; /* 垂直方向（縦）の中央揃え */
+}
+
+.sticky_note {
+  margin-left: 10px; /* ボタンとの間隔を調整 */
+}
+
+.sticky_note img.sticky_note_image {
+  max-width: 150px; /* 画像の最大幅を指定 */
+  height: auto; /* 高さを自動調整 */
+}
 
 .index-item{
   background-color: blueviolet;

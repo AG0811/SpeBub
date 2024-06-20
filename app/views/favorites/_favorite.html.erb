@@ -1,8 +1,12 @@
 <% if news.favorite_by?(current_user) %>
-  <%= button_to "いいね済", news_favorites_path(news), method: :delete, data: { turbo_method: :delete }, class: "news_favorites" %>
-  <%# <%=button_to "いいね済", news_favorites_path(news.id),  data: { turbo_method: :delete }, class: "news_favorites" %>
+  <div class="flex-container">
+    <%= button_to "いいね", news_favorites_path(news), method: :delete, data: { turbo_method: :delete }, class: "news_favorites" %>
+    <div class="sticky_note">
+      <%= image_tag 'note.png', class: 'sticky_note_image' %>
+    </div>
+  </div>
 <% else %>
-  <%= button_to "いいねする", news_favorites_path(news), method: :post, data: { turbo_method: :post }, class: "news_favorites" %>
-  <%# <%=button_to "いいねする", news_favorites_path(news.id), data: { turbo_method: :post }, class: "news_favorites" %>
+  <div class="flex-container">
+    <%= button_to "いいね", news_favorites_path(news), method: :post, data: { turbo_method: :post }, class: "news_favorites" %>
+  </div>
 <% end %>
-
