@@ -71,7 +71,6 @@ group :test do
   gem "webdrivers"
 end
 
-
 gem 'pry-rails'
 
 # 画像保存や投稿

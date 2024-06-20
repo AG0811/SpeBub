@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :news
+  resources :news do
+    resource :favorites, only: [:create, :destroy]
+  end
   root to: 'news#index'
 end

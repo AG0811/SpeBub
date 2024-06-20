@@ -54,6 +54,7 @@
   margin: 0px 10px;
   /* border-radius: 10px; */
   border-radius: 0px 0px 10px 10px;
+  cursor: pointer;
 }
 .body{
   /* background-color:darkgray; */
@@ -188,6 +189,7 @@
 .index-tagbox{
   display: flex;
 }
+
 .index-item{
   background-color: blueviolet;
   color: white;

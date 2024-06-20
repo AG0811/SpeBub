@@ -1,3 +1,4 @@
+console.log('news_filter.jsを読み込みました');
 document.addEventListener('turbo:load', () => {
   const userDataDiv = document.getElementById('user-data');
 
@@ -52,7 +53,7 @@ document.addEventListener('turbo:load', () => {
 
       let shouldDisplay = false;
       if (filter === 'all') {
-        shouldDisplay = prefectureId === userAddressId;
+        shouldDisplay = prefectureId === userAddressId; // ユーザーの都道府県と一致するニュースアイテムのみ表示
       } else if (filter === 'favorite') {
         // お気に入りのフィルタリングロジックを実装する（必要に応じて）
       } else if (filter === 'unread') {

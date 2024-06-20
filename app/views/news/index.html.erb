@@ -48,6 +48,11 @@
 
     <div class="news-item" data-news-id="<%= news_item.id %>" data-prefecture-id="<%= news_item.prefecture_id %>" data-user-id="<%= news_item.user_id %>" data-date="<%= news_date %>">
 
+      <!--▼ 記事のお気に入り操作※先ずはチェックボックス式にしたい ▼-->
+      <%= render partial: "favorites/favorite", locals: { news: news_item } %>
+      <!--▲ 記事のお気に入り操作 ▲-->
+
+
       <!-- 自分の記事に対する操作メニュー -->
       <% if news_item.user_id == @user.id %>
         <div class="more">
