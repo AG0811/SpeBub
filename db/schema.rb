@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_19_235111) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_21_014845) do
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -60,6 +60,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_19_235111) do
     t.index ["user_id"], name: "index_news_on_user_id"
   end
 
+  create_table "read_statuses", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "news_id", null: false
+    t.boolean "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["news_id"], name: "index_read_statuses_on_news_id"
+    t.index ["user_id"], name: "index_read_statuses_on_user_id"
+  end
+
   create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "username"
     t.integer "address_id"
@@ -74,4 +84,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_19_235111) do
   add_foreign_key "favorites", "news"
   add_foreign_key "favorites", "users"
   add_foreign_key "news", "users"
+  add_foreign_key "read_statuses", "news"
+  add_foreign_key "read_statuses", "users"
 end

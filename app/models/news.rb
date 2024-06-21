@@ -6,8 +6,12 @@ class News < ApplicationRecord
   has_many :favorited_users, through: :favorites, source: :user  # お気に入りを付けたユーザーの関連付け
 
   belongs_to :user
-
   def favorite_by?(user)
     favorites.exists?(user_id: user.id)
+  end
+
+  has_many :read_statuses, dependent: :destroy
+  def read_by_user?(user)
+    read_statuses.exists?(user_id: user.id, read: true)
   end
 end
