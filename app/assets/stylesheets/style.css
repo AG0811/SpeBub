@@ -171,12 +171,16 @@
   align-items:center;
   list-style-type: none;
 }
-.news-date-separator{
-  display: flex;
+.news-date{display: flex;
   text-align: center;
   justify-content: center;
   align-items:center;
+}
+.news-date-separator{
   list-style-type: none;
+  background-color: #e2c6ff;
+  border-radius: 20px;
+  padding: 5px 10px;
 }
 .news-item{
   background-color: #e2c6ff;
