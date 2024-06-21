@@ -33,6 +33,10 @@ class NewsController < ApplicationController
     # 記事を閲覧したことを記録する
     @news.read_statuses.find_or_create_by(user_id: @user.id).update(read: true)
     @new_news = News.new
+
+    @comment = Comment.new
+    @comments = @news.comments.includes(:user)
+    @user = current_user # ユーザーがログインしている場合の情報を設定
   end
 
   def edit

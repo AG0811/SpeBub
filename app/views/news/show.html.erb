@@ -38,5 +38,9 @@
     <%= link_to '削除', news_path(@news), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' }, class: 'show-delete' %>
   <% end %>
 </div>
+<!-- コメントフォームの表示 -->
+  <div class= 'comments_form'>
+    <%= render 'comments/comments', news: @news, comment: @comment, user: @user %>
+  </div>
 </div>
 </div>
