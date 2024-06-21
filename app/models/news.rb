@@ -14,4 +14,6 @@ class News < ApplicationRecord
   def read_by_user?(user)
     read_statuses.exists?(user_id: user.id, read: true)
   end
+
+  has_many :comments  # commentsテーブルとのアソシエーション
 end
