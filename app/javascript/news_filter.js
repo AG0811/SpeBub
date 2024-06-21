@@ -88,6 +88,7 @@ document.addEventListener('turbo:load', () => {
     filterNewsItems(defaultItem.dataset.filter);
   }
 
+  
   selectElement.classList.add('hidden'); // 初期状態でセレクト要素を非表示に設定
   selectElement.addEventListener('change', (event) => {
     const selectedPrefectureId = event.target.value;
