@@ -1,3 +1,5 @@
+# app/controllers/news_controller.rb
+
 class NewsController < ApplicationController
   before_action :load_active_hash, only: [:index, :new, :create, :show, :edit]
   before_action :find_or_create_user
@@ -14,7 +16,7 @@ class NewsController < ApplicationController
     @news = News.new
   end
 
-  
+
   def create
     @news = News.new(news_params)
     @news.user_id = @user.id  # ユーザーをIDで設定
@@ -28,6 +30,8 @@ class NewsController < ApplicationController
   end
 
   def show
+    # 記事を閲覧したことを記録する
+    @news.read_statuses.find_or_create_by(user_id: @user.id).update(read: true)
     @new_news = News.new
   end
 

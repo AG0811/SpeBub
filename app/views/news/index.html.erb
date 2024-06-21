@@ -46,7 +46,7 @@
     <% end %>
 
     <!-- ニュースアイテムを表示 -->
-    <div class="news-item" 
+    <div class="news-item <%= 'unread' unless news_item.read_by_user?(@user) %>" 
       data-news-id="<%= news_item.id %>" 
       data-prefecture-id="<%= news_item.prefecture_id %>" 
       data-user-id="<%= news_item.user_id %>" 
@@ -74,6 +74,11 @@
       <p class='index-title'>タイトル：<%= news_item.title %></p>
       <p class="name">投稿者名：<%= news_item.author_name %></p>
       <p class="date">投稿日時：<%= news_item.created_at.strftime('%Y年%m月%d日 %H:%M') %></p>
+
+      <!-- 未読の場合に [未読] を表示 -->
+      <% unless news_item.read_by_user?(@user) %>
+        <p>未読</p>
+      <% end %>
 
       <!-- タグの表示 -->
       <div class='index-tagbox'>
