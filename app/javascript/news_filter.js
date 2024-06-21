@@ -50,6 +50,7 @@ document.addEventListener('turbo:load', () => {
       const prefectureId = item.dataset.prefectureId;
       const newsDate = item.dataset.date;
       const isFavoritedByCurrentUser = item.dataset.favoritedByCurrentUser === 'true'; // ニュースがユーザーによってお気に入りされているかを取得
+      const isReadByCurrentUser = item.classList.contains('unread') ? false : true; // ニュースがユーザーによって読まれているかを取得
 
       let shouldDisplay = false;
       if (filter === 'all') {
@@ -57,7 +58,7 @@ document.addEventListener('turbo:load', () => {
       } else if (filter === 'favorite') {
         shouldDisplay = isFavoritedByCurrentUser; // お気に入りされたニュースアイテムのみ表示
       } else if (filter === 'unread') {
-        // 未読のフィルタリングロジックを実装する（必要に応じて）
+        shouldDisplay = !isReadByCurrentUser && prefectureId === userAddressId; // 未読のニュースアイテムかつユーザーの都道府県と一致するニュースアイテムのみ表示
       } else if (filter === 'search') {
         shouldDisplay = prefectureId === selectedPrefectureId; // 選択された都道府県と一致するニュースアイテムのみ表示
       } else if (filter === 'mine') {
@@ -88,7 +89,6 @@ document.addEventListener('turbo:load', () => {
     filterNewsItems(defaultItem.dataset.filter);
   }
 
-  
   selectElement.classList.add('hidden'); // 初期状態でセレクト要素を非表示に設定
   selectElement.addEventListener('change', (event) => {
     const selectedPrefectureId = event.target.value;
