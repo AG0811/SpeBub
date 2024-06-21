@@ -14,6 +14,7 @@ class NewsController < ApplicationController
     @news = News.new
   end
 
+  
   def create
     @news = News.new(news_params)
     @news.user_id = @user.id  # ユーザーをIDで設定
