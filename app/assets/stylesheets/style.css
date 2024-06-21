@@ -167,7 +167,6 @@
 /*************************/
 /* app\views\news\index.html.erb */
 .more_list{
-  background-color: white;
   display: flex;
   align-items:center;
   list-style-type: none;
@@ -180,14 +179,28 @@
   list-style-type: none;
 }
 .news-item{
-  background-color:white;
+  background-color: #e2c6ff;
   padding: 10px 20px;
   margin: 10px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 影の設定 */
 }
+.news-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: aliceblue; */
+  height: 30px;
+}
+.news-body{
+  background-color: white;
+  border-radius: 15px;
+  padding: 5px;
+  margin-top: 5px;
+}
 .index-tagbox{
   display: flex;
+  padding: 10px;
 }
 .news_favorites{
   background-color: blueviolet;
@@ -222,6 +235,11 @@
   border-radius: 50px;
   font-size: 12px;
 
+}
+.title-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .index-title{
   font-size: 24px;
