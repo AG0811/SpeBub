@@ -3,7 +3,7 @@ class News < ApplicationRecord
   has_many_attached :images, dependent: :destroy
   has_many_attached :videos, dependent: :destroy
   has_many :favorites, dependent: :destroy  # お気に入り関連の関連付け
-  has_many :favorited_users, through: :favorites, source: :user  # お気に入りを付けたユーザーの関連付け
+  has_many :favorited_users, through: :favorites, source: :user, dependent: :destroy  # お気に入りを付けたユーザーの関連付け
 
   belongs_to :user
   def favorite_by?(user)

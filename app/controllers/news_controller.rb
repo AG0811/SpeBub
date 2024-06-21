@@ -1,3 +1,5 @@
+# app/controllers/news_controller.rb
+
 class NewsController < ApplicationController
   before_action :load_active_hash, only: [:index, :new, :create, :show, :edit]
   before_action :find_or_create_user
