@@ -79,3 +79,7 @@ gem 'image_processing', '~> 1.2'
 
 # プルダウンリストのアクティブハッシュ
 gem 'active_hash'
+
+group :production do
+  gem 'pg'
+end
