@@ -5,7 +5,6 @@ class NewsController < ApplicationController
   before_action :find_or_create_user
   before_action :set_news, only: %i[show edit update destroy]
   before_action :authorize_user, only: %i[edit update destroy]
-  before_action :set_user
 
   def index
     @news = News.order(created_at: :desc)
@@ -38,10 +37,6 @@ class NewsController < ApplicationController
     @comment = Comment.new
     @comments = @news.comments.includes(:user)
     @user = current_user # ユーザーがログインしている場合の情報を設定
-
-    if @user.nil?
-      logger.error "User is nil in show action"
-    end
   end
 
   def edit
@@ -84,10 +79,7 @@ class NewsController < ApplicationController
       redirect_to root_path
     end
   end
-  def set_user
-    @user = current_user
-    Rails.logger.error("User is nil in show action") if @user.nil?
-  end
+
   def find_or_create_user
     ip_address = request.remote_ip
     @user = User.find_or_create_by(ip_address: ip_address)
@@ -99,3 +91,4 @@ class NewsController < ApplicationController
   #   @user = current_user || User.create(ip_address: request.remote_ip)
   # end
 end
+
