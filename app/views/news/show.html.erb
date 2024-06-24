@@ -31,11 +31,13 @@
 
 <%# ↓一応です 最終的にはID参照する予定 %>
 <div class='show-menu' >
-  <% if @news.user_id == @user.id %>
+  <% if @user && @news.user_id == @user.id %>
     <div class='show-edit' >
       <%= link_to '編集', edit_news_path(@news), class: 'edit-link', style: 'display: inline' %>
     </div>
     <%= link_to '削除', news_path(@news), data: { turbo_method: 'delete', turbo_confirm: '本当にこの記事を削除しますか？' }, class: 'show-delete' %>
+  <% else %>
+    <!-- 編集権限がない場合の処理 -->
   <% end %>
 </div>
 <!-- コメントフォームの表示 -->

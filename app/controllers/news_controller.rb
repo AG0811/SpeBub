@@ -37,6 +37,10 @@ class NewsController < ApplicationController
     @comment = Comment.new
     @comments = @news.comments.includes(:user)
     @user = current_user # ユーザーがログインしている場合の情報を設定
+
+    if @user.nil?
+      logger.error "User is nil in show action"
+    end
   end
 
   def edit
