@@ -1,6 +1,6 @@
 <div class="comments-wrapper">
   <div class="container">
-    <% if user.address_id == @news.prefecture_id %>
+    <% if @user && user.address_id == @news.prefecture_id %>
       <%= form_with(model: [@news, @comment], local: true) do |form| %>
         <%= form.text_area :text, placeholder: "コメントする", rows: "2" %>
         <%= form.submit "SEND" %>
