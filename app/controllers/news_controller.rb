@@ -23,6 +23,7 @@ class NewsController < ApplicationController
 
     if @news.save
       @user.update(username: params[:news][:author_name])  # ユーザー名の更新
+      @user.update(address_id: params[:news][:prefecture_id])  # ユーザーの都道府県更新※将来的に消す
       redirect_to news_index_path, notice: '記事が作成され、ユーザー名が更新されました'
     else
       render :new
