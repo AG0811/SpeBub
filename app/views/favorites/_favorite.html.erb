@@ -1,4 +1,4 @@
-<% if news.favorite_by?(current_user) %>
+<% if news && news.favorite_by?(current_user) %>
   <div class="flex-container">
     <%= button_to "いいね", news_favorites_path(news), method: :delete, data: { turbo_method: :delete }, class: "news_favorites" %>
     <div class="sticky_note">
