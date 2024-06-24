@@ -16,7 +16,6 @@ class NewsController < ApplicationController
     @news = News.new
   end
 
-
   def create
     @news = News.new(news_params)
     @news.user_id = @user.id  # ユーザーをIDで設定
@@ -82,6 +81,13 @@ class NewsController < ApplicationController
   end
 
   def find_or_create_user
-    @user = current_user || User.create(ip_address: request.remote_ip)
+    ip_address = request.remote_ip
+    @user = User.find_or_create_by(ip_address: ip_address)
+  rescue ActiveRecord::RecordNotUnique
+    # 重複が発生した場合は再度検索を行う
+    @user = User.find_by(ip_address: ip_address)
   end
+  # def find_or_create_user
+  #   @user = current_user || User.create(ip_address: request.remote_ip)
+  # end
 end
