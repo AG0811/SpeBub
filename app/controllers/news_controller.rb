@@ -82,6 +82,9 @@ class NewsController < ApplicationController
   end
 
   def find_or_create_user
-    @user = current_user || User.create(ip_address: request.remote_ip)
+    # @user = current_user || User.create(ip_address: request.remote_ip)
+    @user = User.find_or_create_by(ip_address: request.remote_ip) do |user|
+      # 新しいユーザーが作成される際の初期設定を行う場合はここに記述
+    end
   end
 end
