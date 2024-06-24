@@ -36,7 +36,7 @@ class NewsController < ApplicationController
 
     @comment = Comment.new
     @comments = @news.comments.includes(:user)
-    @user = current_user # ユーザーがログインしている場合の情報を設定
+    # @user = current_user # ユーザーがログインしている場合の情報を設定
   end
 
   def edit
@@ -82,10 +82,14 @@ class NewsController < ApplicationController
 
   def find_or_create_user
     ip_address = request.remote_ip
-    @user = User.find_or_create_by(ip_address: ip_address)
+    @user = User.find_or_create_by!(ip_address: ip_address)
   rescue ActiveRecord::RecordNotUnique
     # 重複が発生した場合は再度検索を行う
     @user = User.find_by(ip_address: ip_address)
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error "User creation failed: #{e.message}"
+    # エラー発生時の対応を追加（例: リダイレクト、エラーメッセージ表示など）
+    redirect_to root_path, alert: "ユーザーの作成に失敗しました。再度お試しください。"
   end
   # def find_or_create_user
   #   @user = current_user || User.create(ip_address: request.remote_ip)
