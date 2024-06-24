@@ -7,6 +7,7 @@ class News < ApplicationRecord
 
   belongs_to :user
   def favorite_by?(user)
+    return false if user.nil?
     favorites.exists?(user_id: user.id)
   end
 
