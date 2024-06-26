@@ -175,6 +175,7 @@
   text-align: center;
   justify-content: center;
   align-items:center;
+  padding: 5px 10px;
 }
 .news-date-separator{
   list-style-type: none;
@@ -182,6 +183,67 @@
   border-radius: 20px;
   padding: 5px 10px;
 }
+
+/* 都道府県セレクトボックスのスタイル */
+#prefecture-select {
+  /* padding: 8px; */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+}
+
+#prefecture-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+/* ▼search */
+/* 検索フォームのスタイル */
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.search-form select,
+.search-form .search-input {
+  margin-right: 10px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+  border-radius: 10px;
+}
+
+.search-form select:focus,
+.search-form .search-input:focus {
+  border-color: blueviolet;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-form .search-btn {
+  padding: 8px 20px;
+  font-size: 16px;
+  background-color: blueviolet;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-form .search-btn:hover {
+  background-color: blueviolet;
+}
+
+.search-form .search-btn:focus {
+  outline: none;
+}
+/* ▲search */
+
 .news-item{
   background-color: #e2c6ff;
   padding: 10px 20px;

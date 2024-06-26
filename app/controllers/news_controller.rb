@@ -1,15 +1,24 @@
 # app/controllers/news_controller.rb
 
 class NewsController < ApplicationController
-  before_action :load_active_hash, only: [:index, :new, :create, :show, :edit]
+  before_action :load_active_hash, only: [:index, :new, :create, :show, :edit, :search]
   before_action :find_or_create_user
   before_action :set_news, only: %i[show edit update destroy]
   before_action :authorize_user, only: %i[edit update destroy]
+  before_action :move_to_index, except: [:index, :show, :search]
 
   def index
     @news = News.order(created_at: :desc)
     @new_news = News.new
     @favorited_news_ids = current_user.favorite_news.pluck(:id) if current_user
+
+    if params[:keyword].present? || params[:category_id].present?
+      keyword = "%#{params[:keyword]}%"
+      category_id = params[:category_id]
+
+      @news = @news.where('content LIKE ? OR title LIKE ?', keyword, keyword) if params[:keyword].present?
+      @news = @news.where(category_id: category_id) if params[:category_id].present?
+    end
   end
 
   def new
@@ -39,6 +48,10 @@ class NewsController < ApplicationController
     # @user = current_user # ユーザーがログインしている場合の情報を設定
   end
 
+  def search
+    @news = News.search(params[:keyword])
+  end
+
   def edit
     respond_to do |format|
       format.html { render partial: 'edit_form', locals: { news: @news, categories: @categories, prefectures: @prefectures } }
@@ -60,6 +73,7 @@ class NewsController < ApplicationController
   end
 
   private
+
 
   def load_active_hash
     @prefectures = ActiveHash::Prefecture.all
@@ -91,8 +105,11 @@ class NewsController < ApplicationController
     # エラー発生時の対応を追加（例: リダイレクト、エラーメッセージ表示など）
     redirect_to root_path, alert: "ユーザーの作成に失敗しました。再度お試しください。"
   end
-  # def find_or_create_user
-  #   @user = current_user || User.create(ip_address: request.remote_ip)
-  # end
+
+  def move_to_index
+    unless @user.present?
+      redirect_to root_path, alert: "ユーザーが見つかりませんでした。再度お試しください。"
+    end
+  end
 end
 

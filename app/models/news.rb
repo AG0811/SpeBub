@@ -17,4 +17,13 @@ class News < ApplicationRecord
   end
 
   has_many :comments  # commentsテーブルとのアソシエーション
+
+  def self.search(search)
+    if search != ""
+      keyword = "%#{search}%"
+      where('content LIKE ? OR title LIKE ?', keyword, keyword)
+    else
+      News.order(created_at: :desc)
+    end
+  end
 end
