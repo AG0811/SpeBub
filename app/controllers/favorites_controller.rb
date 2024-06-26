@@ -5,17 +5,17 @@ class FavoritesController < ApplicationController
 
   def create
     if current_user.favorite_news << @news
-      redirect_to root_path, notice: 'いいねしました。'
+      redirect_back(fallback_location: root_path, notice: 'いいねしました。')
     else
-      redirect_to root_path, alert: 'いいねできませんでした。'
+      redirect_back(fallback_location: root_path, alert: 'いいねできませんでした。')
     end
   end
 
   def destroy
     if current_user.favorite_news.delete(@news)
-      redirect_to root_path, notice: 'いいねを取り消しました。'
+      redirect_back(fallback_location: root_path, notice: 'いいねを取り消しました。')
     else
-      redirect_to root_path, alert: 'いいねを取り消せませんでした。'
+      redirect_back(fallback_location: root_path, alert: 'いいねを取り消せませんでした。')
     end
   end
 
@@ -26,6 +26,6 @@ class FavoritesController < ApplicationController
   end
 
   def require_user
-    redirect_to root_path, alert: 'ログインしてください。' unless current_user
+    redirect_back(fallback_location: root_path, alert: 'ログインしてください。') unless current_user
   end
 end
