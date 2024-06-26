@@ -1,5 +1,6 @@
 <div class='wrapper'>
 <div class='show'>
+<%= render partial: "favorites/favorite", locals: { news: @news } %>
 <div class="actions">
   <%= link_to '記事一覧に戻る', news_index_path %>
 </div>
