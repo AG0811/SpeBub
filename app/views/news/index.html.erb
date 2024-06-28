@@ -112,10 +112,8 @@
           <% news_item.images.each do |image| %>
             <%= image_tag rails_blob_path(image, disposition: 'attachment', only_path: true), class: "image-size-limit" %>
           <% end %>
-        </div>
 
         <!-- 動画の表示 -->
-        <div class='index-items'>
           <% news_item.videos.each do |video| %>
             <video class='video-size-limit' controls>
               <source src="<%= url_for(video) %>" type="video/mp4">
