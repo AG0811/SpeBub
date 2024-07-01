@@ -1,7 +1,3 @@
-
-
-
-
 require 'maxminddb'
 
 # GeoLite2データベースへのパスを設定する
