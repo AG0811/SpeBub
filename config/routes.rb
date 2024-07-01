@@ -9,4 +9,6 @@ Rails.application.routes.draw do
 
   end
   root to: 'news#index'
+
+  match '/', to: 'your_controller#your_action', via: :options
 end
