@@ -9,16 +9,6 @@ class ApplicationController < ActionController::Base
     @current_user ||= find_or_create_user_by_ip
   end
 
-  # def find_or_create_user_by_ip
-  #   user = User.find_by(ip_address: request.remote_ip)
-
-  #   unless user
-  #     user = User.create(ip_address: request.remote_ip)
-  #     # ここで他の必要な初期化処理を行う場合があります
-  #   end
-
-  #   user
-  # end
   def find_or_create_user_by_ip
     user = User.find_or_create_by(ip_address: request.remote_ip)
 
@@ -29,10 +19,13 @@ class ApplicationController < ActionController::Base
     unless user
       user = User.create(ip_address: request.remote_ip)
       # ここで他の必要な初期化処理を行う場合があります
+
       if prefecture
         user.update(address_id: prefecture.id)
       end
+
     end
+
     user
   end
 

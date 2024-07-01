@@ -102,14 +102,14 @@ class NewsController < ApplicationController
     location = GeoLocation.lookup(ip_address)
     Rails.logger.debug "Location lookup result: #{location}"
     prefecture = ActiveHash::Prefecture.find_by(name: location[:state])
-  
+
     if prefecture
       @user.update(address_id: prefecture.id)
     else
       Rails.logger.warn "Prefecture not found for state: #{location[:state]}"
       @user.update(address_id: nil)
     end
-  
+
     rescue ActiveRecord::RecordNotUnique
       @user = User.find_by(ip_address: ip_address)
     rescue ActiveRecord::RecordInvalid => e
