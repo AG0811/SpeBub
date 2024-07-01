@@ -83,3 +83,7 @@ gem 'active_hash'
 group :production do
   gem 'pg'
 end
+
+# Gemfile
+gem 'maxmind-geoip2'
+gem 'maxminddb'
