@@ -9,6 +9,4 @@ Rails.application.routes.draw do
 
   end
   root to: 'news#index'
-
-  match '/', to: 'news#index', via: :options
 end
