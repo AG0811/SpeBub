@@ -30,14 +30,14 @@ class NewsController < ApplicationController
     @news.user_id = @user.id  # ユーザーをIDで設定
 
 
-    # 現在の都道府県を取得し、そのIDをユーザーの住所IDとして設定
+    # 現在の都道府県を取得し、そのIDをユーザーの住所IDとして設定【NEW】
     current_location = GeoLocation.lookup(@user.ip_address)
     current_prefecture = ActiveHash::Prefecture.find_by(name: current_location[:state])
     @user.update(address_id: current_prefecture.id) if current_prefecture
 
     if @news.save
       @user.update(username: params[:news][:author_name])  # ユーザー名の更新
-      # @user.update(address_id: params[:news][:prefecture_id])  # ユーザーの都道府県更新※将来的に消す
+      # @user.update(address_id: params[:news][:prefecture_id])  # ユーザーの都道府県更新※将来的に消す【NEW】
       redirect_to news_index_path, notice: '記事が作成され、ユーザー名が更新されました'
     else
       render :new
@@ -103,24 +103,24 @@ class NewsController < ApplicationController
   def find_or_create_user
     ip_address = request.remote_ip
     @user = User.find_or_create_by!(ip_address: ip_address)
-
+  
     # GeoLocationモデルを使って位置情報を取得
     location = GeoLocation.lookup(ip_address)
     Rails.logger.debug "Location lookup result: #{location}"
     prefecture = ActiveHash::Prefecture.find_by(name: location[:state])
-
+  
     if prefecture
       @user.update(address_id: prefecture.id)
     else
       Rails.logger.warn "Prefecture not found for state: #{location[:state]}"
       @user.update(address_id: nil)
     end
-
+  
     rescue ActiveRecord::RecordNotUnique
       @user = User.find_by(ip_address: ip_address)
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error "User creation failed: #{e.message}"
-      redirect_to root_path, alert: "ユーザーの作成に失敗しました。再度お試しください。"
+    redirect_to root_path, alert: "ユーザーの作成に失敗しました。再度お試しください。"
   end
 
   def move_to_index
