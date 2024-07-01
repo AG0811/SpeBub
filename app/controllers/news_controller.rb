@@ -97,22 +97,24 @@ class NewsController < ApplicationController
   def find_or_create_user
     ip_address = request.remote_ip
     @user = User.find_or_create_by!(ip_address: ip_address)
-  
+
     # GeoLocationモデルを使って位置情報を取得
     location = GeoLocation.lookup(ip_address)
+    Rails.logger.debug "Location lookup result: #{location}"
     prefecture = ActiveHash::Prefecture.find_by(name: location[:state])
   
     if prefecture
       @user.update(address_id: prefecture.id)
+    else
+      Rails.logger.warn "Prefecture not found for state: #{location[:state]}"
+      @user.update(address_id: nil)
     end
   
-  rescue ActiveRecord::RecordNotUnique
-    # 重複が発生した場合は再度検索を行う
-    @user = User.find_by(ip_address: ip_address)
-  rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error "User creation failed: #{e.message}"
-    # エラー発生時の対応を追加（例: リダイレクト、エラーメッセージ表示など）
-    redirect_to root_path, alert: "ユーザーの作成に失敗しました。再度お試しください。"
+    rescue ActiveRecord::RecordNotUnique
+      @user = User.find_by(ip_address: ip_address)
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error "User creation failed: #{e.message}"
+      redirect_to root_path, alert: "ユーザーの作成に失敗しました。再度お試しください。"
   end
 
   def move_to_index
