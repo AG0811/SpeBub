@@ -21,15 +21,18 @@ class ApplicationController < ActionController::Base
   # end
   def find_or_create_user_by_ip
     user = User.find_or_create_by(ip_address: request.remote_ip)
-  
+
     # GeoLocationモデルを使って位置情報を取得
     location = GeoLocation.lookup(request.remote_ip)
     prefecture = ActiveHash::Prefecture.find_by(name: location[:state])
-  
-    if prefecture
-      user.update(address_id: prefecture.id)
+
+    unless user
+      user = User.create(ip_address: request.remote_ip)
+      # ここで他の必要な初期化処理を行う場合があります
+      if prefecture
+        user.update(address_id: prefecture.id)
+      end
     end
-  
     user
   end
 

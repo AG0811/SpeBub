@@ -97,17 +97,15 @@ class NewsController < ApplicationController
   def find_or_create_user
     ip_address = request.remote_ip
     @user = User.find_or_create_by!(ip_address: ip_address)
-
-    
+  
     # GeoLocationモデルを使って位置情報を取得
     location = GeoLocation.lookup(ip_address)
     prefecture = ActiveHash::Prefecture.find_by(name: location[:state])
-
+  
     if prefecture
       @user.update(address_id: prefecture.id)
     end
-
-
+  
   rescue ActiveRecord::RecordNotUnique
     # 重複が発生した場合は再度検索を行う
     @user = User.find_by(ip_address: ip_address)
