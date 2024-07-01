@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
       end
 
     end
-
     user
   end
 

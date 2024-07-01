@@ -29,9 +29,14 @@
     <%= form.collection_select :category_id, @categories, :id, :name %>
   </div>
 
+  <%# <div class="field">
+    <%#<%= form.label :prefecture_id %>
+    <%#<%= form.collection_select :prefecture_id, @prefectures, :id, :name, { selected: @user.address_id }, prompt: "選択してください" %>
+  <%#</div> %>
+  <%# GeoLite2のFukuokaを日本語化し、アクティブハッシュからIDを代入する %>
   <div class="field">
     <%= form.label :prefecture_id %>
-    <%= form.collection_select :prefecture_id, @prefectures, :id, :name, { selected: @user.address_id }, prompt: "選択してください" %>
+    <%= form.collection_select :prefecture_id, @prefectures, :id, :name, selected: @user.address_id, prompt: "選択してください" %>
   </div>
 
   <div class="create_actions">

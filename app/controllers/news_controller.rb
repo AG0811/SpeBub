@@ -29,9 +29,15 @@ class NewsController < ApplicationController
     @news = News.new(news_params)
     @news.user_id = @user.id  # ユーザーをIDで設定
 
+
+    # 現在の都道府県を取得し、そのIDをユーザーの住所IDとして設定
+    current_location = GeoLocation.lookup(@user.ip_address)
+    current_prefecture = ActiveHash::Prefecture.find_by(name: current_location[:state])
+    @user.update(address_id: current_prefecture.id) if current_prefecture
+
     if @news.save
       @user.update(username: params[:news][:author_name])  # ユーザー名の更新
-      @user.update(address_id: params[:news][:prefecture_id])  # ユーザーの都道府県更新※将来的に消す
+      # @user.update(address_id: params[:news][:prefecture_id])  # ユーザーの都道府県更新※将来的に消す
       redirect_to news_index_path, notice: '記事が作成され、ユーザー名が更新されました'
     else
       render :new
