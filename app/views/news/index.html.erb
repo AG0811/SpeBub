@@ -32,6 +32,16 @@
     <div>都道府県： (都道府県が見つかりません)</div>
   <% end %>
 
+<% location = GeoLocation.lookup(@user.ip_address) %>
+<% current_prefecture = ActiveHash::Prefecture.find_by(name: location[:state]) %>
+
+<% if current_prefecture %>
+  <div>現在の都道府県： <%= current_prefecture.name %></div>
+<% else %>
+  <div>現在の都道府県： (都道府県が見つかりません)</div>
+<% end %>
+
+
   <!-- 検索を追加！ -->
   <%= form_with(url: news_index_path, local: true, method: :get, class: "search-form") do |form| %>
     <%= form.select :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]), include_blank: "すべてのカテゴリ" %>
