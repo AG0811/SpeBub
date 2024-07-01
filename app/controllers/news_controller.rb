@@ -1,3 +1,5 @@
+# app/controllers/news_controller.rb
+
 class NewsController < ApplicationController
   before_action :load_active_hash, only: [:index, :new, :create, :show, :edit, :search]
   before_action :find_or_create_user
@@ -72,6 +74,7 @@ class NewsController < ApplicationController
 
   private
 
+
   def load_active_hash
     @prefectures = ActiveHash::Prefecture.all
     @categories = ActiveHash::Category.all
@@ -117,3 +120,4 @@ class NewsController < ApplicationController
     end
   end
 end
+
