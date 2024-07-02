@@ -35,10 +35,10 @@
       <%= form.collection_select :category_id, @categories, :id, :name %>
     </div>
 
-    <div class="field">
+    <!--<div class="field">
       <%= form.label :prefecture_id %>
       <%= form.collection_select :prefecture_id, @prefectures, :id, :name, { selected: @user.address_id } %>
-    </div>
+    </div>-->
 
     <div class="create_actions">
       <%= form.submit '更新する' %>
