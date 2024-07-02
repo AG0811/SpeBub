@@ -55,12 +55,14 @@
     <% news_date = news_item.created_at.to_date %>
 
     <!-- 日付が変わるたびに区切りを表示 -->
-    <% if current_date != news_date %>
+    
+    <div class="news-date">
+      <% if current_date != news_date %>
       <% current_date = news_date %>
       <div class="news-date-separator" data-date="<%= current_date %>">
         <%= current_date.strftime('%Y年%m月%d日') %>
       </div>
-    <% end %>
+    <% end %></div>
 
     <!-- ニュースアイテムを表示 -->
     <div class="news-item <%= 'unread' unless news_item.read_by_user?(@user) %>" 
