@@ -87,3 +87,8 @@ end
 # Gemfile
 gem 'maxmind-geoip2'
 gem 'maxminddb'
+
+# OpenWeatherMap
+gem 'httparty'
+gem 'dotenv-rails'
+gem 'open_weather'

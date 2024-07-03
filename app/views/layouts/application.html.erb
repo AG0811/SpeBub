@@ -1,3 +1,5 @@
+<!-- app/views/layouts/application.html.erb -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +16,14 @@
 </head>
 
 <header class="header">
-  <a class="logo-title" href= "<%=root_path%>">
+  <a class="logo-title" href="<%= root_path %>">
     <div class="logo"></div>
     <div class="title">SpeBub</div>
   </a>
-  <div class="weather_forecast">天気予報表示</div>
+  <div class="weather_forecast">
+    <!-- ここに天気情報を表示する -->
+    <%= render 'layouts/weather_forecast' %>
+  </div>
   <a class="post" href="<%= new_news_path %>">投稿する</a>
 </header>
 
@@ -40,6 +45,6 @@
 
 <footer class="footer">
   <p>Copyright SpeBub 2024.</p>
-  <a href="https://www.maxmind.com">https://www.maxmind.com</a>.
+  <p href="https://www.maxmind.com">https://www.maxmind.com</p>.
 </footer>
 </html>

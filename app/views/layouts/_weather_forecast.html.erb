@@ -1,0 +1,12 @@
+<div class="weather_forecast">
+
+
+  <!--ここにダミーを表示させる-->
+  <% if @weather_data.present? && @weather_data[:success?] %>
+    <p>天気: <%= @weather_data[:data]['weather'][0]['description'] %></p>
+    <p>気温: <%= @weather_data[:data]['main']['temp'] %> ℃</p>
+    <p>湿度: <%= @weather_data[:data]['main']['humidity'] %> %</p>
+  <% else %>
+    <p>東京の天気情報を取得できませんでした。</p>
+  <% end %>
+</div>

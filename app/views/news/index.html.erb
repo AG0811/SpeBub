@@ -55,7 +55,7 @@
     <% news_date = news_item.created_at.to_date %>
 
     <!-- 日付が変わるたびに区切りを表示 -->
-    
+
     <div class="news-date">
       <% if current_date != news_date %>
       <% current_date = news_date %>
@@ -65,10 +65,10 @@
     <% end %></div>
 
     <!-- ニュースアイテムを表示 -->
-    <div class="news-item <%= 'unread' unless news_item.read_by_user?(@user) %>" 
-      data-news-id="<%= news_item.id %>" 
-      data-prefecture-id="<%= news_item.prefecture_id %>" 
-      data-user-id="<%= news_item.user_id %>" 
+    <div class="news-item <%= 'unread' unless news_item.read_by_user?(@user) %>"
+      data-news-id="<%= news_item.id %>"
+      data-prefecture-id="<%= news_item.prefecture_id %>"
+      data-user-id="<%= news_item.user_id %>"
       data-date="<%= news_item.created_at.to_date %>"
       data-favorited-by-current-user="<%= news_item.favorite_by?(current_user) %>">
 
