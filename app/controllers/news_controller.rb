@@ -23,14 +23,28 @@ class NewsController < ApplicationController
       @news = @news.where(category_id: category_id) if params[:category_id].present?
     end
 
-    #東京の天気ダミー
+    #ダミーIPの天気
     weather_service = WeatherService.new(OPENWEATHERMAP_API_KEY) # 自分のAPIキーに置き換えてください
-    weather_data = weather_service.fetch_weather_forecast('Tokyo,JP')
+    # prefecture = ActiveHash::Prefecture.find_by(id: current_user.address_id)
+    # weather_data = weather_service.fetch_weather_forecast("Tokyo,JP")
 
-    if weather_data[:success?]
-      @weather_forecast = parse_weather_forecast(weather_data[:data])
+    # if weather_data[:success?]
+    #   @weather_forecast = parse_weather_forecast(weather_data[:data])
+    # else
+    #   flash.now[:alert] = '天気情報の取得に失敗しました'
+    # end
+
+    user_prefecture_id = current_user&.address_id || DEFAULT_PREFECTURE_ID
+    @current_prefecture = ActiveHash::Prefecture.find_by(id: user_prefecture_id)
+    if @current_prefecture
+      weather_data = weather_service.fetch_weather_forecast("#{@current_prefecture.romanized_name},JP")
+      if weather_data[:success?]
+        @weather_forecast = parse_weather_forecast(weather_data[:data])
+      else
+        flash.now[:alert] = '天気情報の取得に失敗しました'
+      end
     else
-      flash.now[:alert] = '天気情報の取得に失敗しました'
+      flash.now[:alert] = 'ユーザーの都道府県情報が見つかりませんでした'
     end
   end
 
