@@ -9,12 +9,12 @@ class WeatherService
   end
 
   def fetch_weather_forecast(city)
-    url = URI("http://api.openweathermap.org/data/2.5/weather?q=#{city}&appid=#{@api_key}&units=metric")
+    url = URI("http://api.openweathermap.org/data/2.5/forecast?q=#{city}&appid=#{@api_key}&units=metric")
     response = Net::HTTP.get(url)
     parsed_response = JSON.parse(response)
-    
-    if parsed_response['cod'] == 200
-      { success?: true, data: parsed_response }
+
+    if parsed_response['cod'] == '200'
+      { success?: true, data: parsed_response['list'] }
     else
       { success?: false, message: parsed_response['message'] }
     end

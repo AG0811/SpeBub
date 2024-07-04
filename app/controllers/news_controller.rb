@@ -25,9 +25,11 @@ class NewsController < ApplicationController
 
     #東京の天気ダミー
     weather_service = WeatherService.new(OPENWEATHERMAP_API_KEY) # 自分のAPIキーに置き換えてください
-    @weather_data = weather_service.fetch_weather_forecast('Tokyo,JP')
+    weather_data = weather_service.fetch_weather_forecast('Tokyo,JP')
 
-    unless @weather_data[:success?]
+    if weather_data[:success?]
+      @weather_forecast = parse_weather_forecast(weather_data[:data])
+    else
       flash.now[:alert] = '天気情報の取得に失敗しました'
     end
   end
@@ -129,15 +131,38 @@ class NewsController < ApplicationController
       Rails.logger.warn "Prefecture not found for state: #{location[:state]}"
       @user.update(address_id: nil)
     end
-
   rescue ActiveRecord::RecordNotUnique
     @user = User.find_by(ip_address: ip_address)
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error "User creation failed: #{e.message}"
     redirect_to root_path, alert: 'ユーザーの作成に失敗しました。再度お試しください。'
   end
-
   def prefecture_name_to_id(prefecture_name)
     ActiveHash::Prefecture.find_by(romanized_name: prefecture_name)&.id
+  end
+
+  def parse_weather_forecast(data)
+    today = Date.today
+    tomorrow = today + 1
+    day_after_tomorrow = today + 2
+
+    weather_forecast = {
+      today: find_weather_for_date(data, today),
+      tomorrow: find_weather_for_date(data, tomorrow),
+      day_after_tomorrow: find_weather_for_date(data, day_after_tomorrow)
+    }
+
+    weather_forecast
+  end
+  def find_weather_for_date(data, date)
+    weather_data = data.find { |entry| Date.parse(entry['dt_txt']).to_date == date }
+    format_weather_data(weather_data) if weather_data
+  end
+  def format_weather_data(data)
+    {
+      weather: data['weather'][0]['description'],
+      temperature: data['main']['temp'],
+      humidity: data['main']['humidity']
+    }
   end
 end

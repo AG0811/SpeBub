@@ -1,12 +1,21 @@
 <div class="weather_forecast">
+  <!-- 東京の天気を表示 -->
+  <% if @weather_forecast.present? %>
+    <h3>今日の天気:</h3>
+    <p>天気: <%= @weather_forecast[:today][:weather] %></p>
+    <p>気温: <%= @weather_forecast[:today][:temperature] %> ℃</p>
+    <p>湿度: <%= @weather_forecast[:today][:humidity] %> %</p>
 
+    <h3>明日の天気:</h3>
+    <p>天気: <%= @weather_forecast[:tomorrow][:weather] %></p>
+    <p>気温: <%= @weather_forecast[:tomorrow][:temperature] %> ℃</p>
+    <p>湿度: <%= @weather_forecast[:tomorrow][:humidity] %> %</p>
 
-  <!--ここにダミーを表示させる-->
-  <% if @weather_data.present? && @weather_data[:success?] %>
-    <p>天気: <%= @weather_data[:data]['weather'][0]['description'] %></p>
-    <p>気温: <%= @weather_data[:data]['main']['temp'] %> ℃</p>
-    <p>湿度: <%= @weather_data[:data]['main']['humidity'] %> %</p>
+    <h3>明後日の天気:</h3>
+    <p>天気: <%= @weather_forecast[:day_after_tomorrow][:weather] %></p>
+    <p>気温: <%= @weather_forecast[:day_after_tomorrow][:temperature] %> ℃</p>
+    <p>湿度: <%= @weather_forecast[:day_after_tomorrow][:humidity] %> %</p>
   <% else %>
-    <p>東京の天気情報を取得できませんでした。</p>
+    <p>天気情報を取得できませんでした。</p>
   <% end %>
 </div>
