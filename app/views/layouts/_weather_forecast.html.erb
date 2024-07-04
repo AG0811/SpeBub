@@ -1,6 +1,6 @@
 <div class="weather_forecast">
-  <!-- 東京の天気を表示 -->
   <% if @weather_forecast.present? %>
+    <p>都道府県: <%= @current_prefecture.name %></p>
     <h3>今日の天気:</h3>
     <p>天気: <%= @weather_forecast[:today][:weather] %></p>
     <p>気温: <%= @weather_forecast[:today][:temperature] %> ℃</p>
