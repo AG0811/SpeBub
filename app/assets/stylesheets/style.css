@@ -28,12 +28,7 @@
   padding: 0 30px 0 30px;
   color:white;
 }
-.weather_forecast{
-  background-color: white;
-  height: 80px;
-  width: 300px;
-  border-radius: 10px;
-}
+
 .post{
   background-color: white;
   border-radius: 50px;
@@ -427,4 +422,21 @@
 
 .comment-item p {
   margin: 5px 0;
+}
+
+/* app\views\layouts\_weather_forecast.html.erb */
+.weather_forecast{
+  background-color: white;
+  min-height: 80px;
+  min-width: 200px;
+  border-radius: 10px;
+  font-size: 10px;
+  padding: 5px;
+}
+.weather_box{
+  display: flex;
+}
+.weather_item{
+  padding: 0px 5px 0px 5px;
+  /* background-color:#45a049 ; */
 }
