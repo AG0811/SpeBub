@@ -1,20 +1,26 @@
 <div class="weather_forecast">
   <% if @weather_forecast.present? %>
     <p>都道府県: <%= @current_prefecture.name %></p>
-    <h3>今日の天気:</h3>
-    <p>天気: <%= @weather_forecast[:today][:weather] %></p>
-    <p>気温: <%= @weather_forecast[:today][:temperature] %> ℃</p>
-    <p>湿度: <%= @weather_forecast[:today][:humidity] %> %</p>
-
-    <h3>明日の天気:</h3>
-    <p>天気: <%= @weather_forecast[:tomorrow][:weather] %></p>
-    <p>気温: <%= @weather_forecast[:tomorrow][:temperature] %> ℃</p>
-    <p>湿度: <%= @weather_forecast[:tomorrow][:humidity] %> %</p>
-
-    <h3>明後日の天気:</h3>
-    <p>天気: <%= @weather_forecast[:day_after_tomorrow][:weather] %></p>
-    <p>気温: <%= @weather_forecast[:day_after_tomorrow][:temperature] %> ℃</p>
-    <p>湿度: <%= @weather_forecast[:day_after_tomorrow][:humidity] %> %</p>
+    <div class="weather_box">
+      <div class="weather_item">
+        <p>今日の天気</p>
+        <p>天気: <%= ActiveHash::Weather.find_by(description: @weather_forecast[:today][:weather]).try(:japanese_description) || @weather_forecast[:today][:weather] %></p>
+        <p>気温: <%= @weather_forecast[:today][:temperature] %> ℃</p>
+        <p>湿度: <%= @weather_forecast[:today][:humidity] %> %</p>
+      </div>
+      <div class="weather_item">
+        <p>明日の天気</p>
+        <p>天気: <%= ActiveHash::Weather.find_by(description: @weather_forecast[:tomorrow][:weather]).try(:japanese_description) || @weather_forecast[:tomorrow][:weather] %></p>
+        <p>気温: <%= @weather_forecast[:tomorrow][:temperature] %> ℃</p>
+        <p>湿度: <%= @weather_forecast[:tomorrow][:humidity] %> %</p>
+      </div>
+      <div class="weather_item">
+        <p>明後日の天気</p>
+        <p>天気: <%= ActiveHash::Weather.find_by(description: @weather_forecast[:day_after_tomorrow][:weather]).try(:japanese_description) || @weather_forecast[:day_after_tomorrow][:weather] %></p>
+        <p>気温: <%= @weather_forecast[:day_after_tomorrow][:temperature] %> ℃</p>
+        <p>湿度: <%= @weather_forecast[:day_after_tomorrow][:humidity] %> %</p>
+      </div>
+    </div>
   <% else %>
     <p>天気情報を取得できませんでした。</p>
   <% end %>
