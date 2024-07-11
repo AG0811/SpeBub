@@ -2,19 +2,19 @@
   <% if @weather_forecast.present? %>
     <p>都道府県: <%= @current_prefecture.name %></p>
     <div class="weather_box">
-      <div class="weather_item">
+      <div class="weather_item" style="background-image: url('<%= @weather_forecast[:today][:icon_url] %>');">
         <p>今日の天気</p>
         <p>天気: <%= ActiveHash::Weather.find_by(description: @weather_forecast[:today][:weather]).try(:japanese_description) || @weather_forecast[:today][:weather] %></p>
         <p>気温: <%= @weather_forecast[:today][:temperature] %> ℃</p>
         <p>湿度: <%= @weather_forecast[:today][:humidity] %> %</p>
       </div>
-      <div class="weather_item">
+      <div class="weather_item" style="background-image: url('<%= @weather_forecast[:tomorrow][:icon_url] %>');">
         <p>明日の天気</p>
         <p>天気: <%= ActiveHash::Weather.find_by(description: @weather_forecast[:tomorrow][:weather]).try(:japanese_description) || @weather_forecast[:tomorrow][:weather] %></p>
         <p>気温: <%= @weather_forecast[:tomorrow][:temperature] %> ℃</p>
         <p>湿度: <%= @weather_forecast[:tomorrow][:humidity] %> %</p>
       </div>
-      <div class="weather_item">
+      <div class="weather_item" style="background-image: url('<%= @weather_forecast[:day_after_tomorrow][:icon_url] %>');">
         <p>明後日の天気</p>
         <p>天気: <%= ActiveHash::Weather.find_by(description: @weather_forecast[:day_after_tomorrow][:weather]).try(:japanese_description) || @weather_forecast[:day_after_tomorrow][:weather] %></p>
         <p>気温: <%= @weather_forecast[:day_after_tomorrow][:temperature] %> ℃</p>

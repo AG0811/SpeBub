@@ -24,13 +24,13 @@ class NewsController < ApplicationController
     end
 
     #IPの天気
-    weather_service = WeatherService.new(OPENWEATHERMAP_API_KEY) # 自分のAPIキーに置き換えてください
+    weather_service = WeatherService.new(OPENWEATHERMAP_API_KEY)
     user_prefecture_id = current_user&.address_id || DEFAULT_PREFECTURE_ID
     @current_prefecture = ActiveHash::Prefecture.find_by(id: user_prefecture_id)
     if @current_prefecture
       weather_data = weather_service.fetch_weather_forecast("#{@current_prefecture.romanized_name},JP")
       if weather_data[:success?]
-        @weather_forecast = parse_weather_forecast(weather_data[:data])
+        @weather_forecast = parse_weather_forecast(weather_data[:data], weather_service)
       else
         flash.now[:alert] = '天気情報の取得に失敗しました'
       end
@@ -146,28 +146,31 @@ class NewsController < ApplicationController
     ActiveHash::Prefecture.find_by(romanized_name: prefecture_name)&.id
   end
 
-  def parse_weather_forecast(data)
+  def parse_weather_forecast(data, weather_service)
     today = Date.today
     tomorrow = today + 1
     day_after_tomorrow = today + 2
 
     weather_forecast = {
-      today: find_weather_for_date(data, today),
-      tomorrow: find_weather_for_date(data, tomorrow),
-      day_after_tomorrow: find_weather_for_date(data, day_after_tomorrow)
+      today: find_weather_for_date(data, today, weather_service),
+      tomorrow: find_weather_for_date(data, tomorrow, weather_service),
+      day_after_tomorrow: find_weather_for_date(data, day_after_tomorrow, weather_service)
     }
 
     weather_forecast
   end
-  def find_weather_for_date(data, date)
+
+  def find_weather_for_date(data, date, weather_service)
     weather_data = data.find { |entry| Date.parse(entry['dt_txt']).to_date == date }
-    format_weather_data(weather_data) if weather_data
+    format_weather_data(weather_data, weather_service) if weather_data
   end
-  def format_weather_data(data)
+
+  def format_weather_data(data, weather_service)
     {
       weather: data['weather'][0]['description'],
       temperature: data['main']['temp'],
-      humidity: data['main']['humidity']
+      humidity: data['main']['humidity'],
+      icon_url: weather_service.icon_url(data['weather'][0]['icon'])
     }
   end
 end
