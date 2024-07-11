@@ -439,4 +439,14 @@
 .weather_item{
   padding: 0px 5px 0px 5px;
   /* background-color:#45a049 ; */
+  margin-left: 5px;
+  background-color:rgba(255,255,255,0.5);
+  background-blend-mode:lighten;
+}
+
+.weather_forecast .weather_item {
+  position: relative;
+  /* background-size: 50px 50px; */
+  background-repeat: no-repeat;
+  background-position: center;
 }

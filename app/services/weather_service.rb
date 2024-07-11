@@ -1,5 +1,3 @@
-# app/services/weather_service.rb
-
 require 'net/http'
 require 'json'
 
@@ -21,4 +19,9 @@ class WeatherService
   rescue StandardError => e
     { success?: false, message: e.message }
   end
+
+  def icon_url(icon_code, size = '')
+    "http://openweathermap.org/img/wn/#{icon_code}#{size}.png"
+  end
 end
+
