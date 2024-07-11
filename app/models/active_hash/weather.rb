@@ -15,7 +15,8 @@ module ActiveHash
       { id: 12, description: 'broken clouds', japanese_description: '抜ける曇り' },
       { id: 13, description: 'scattered clouds', japanese_description: 'まばらな曇り' },
       { id: 14, description: 'few clouds', japanese_description: '薄い雲' },
-      { id: 15, description: 'clear sky', japanese_description: '快晴' }
+      { id: 15, description: 'clear sky', japanese_description: '快晴' },
+      { id: 16, description: 'moderate rain', japanese_description: '適度な雨' }
     ]
   end
 end
